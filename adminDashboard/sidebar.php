@@ -96,7 +96,7 @@
           <!-- Navigation -->
           <ul class="navbar-nav mb-md-3">
             <li class="nav-item">
-              <a class="nav-link" href="addCategory.php" target="_blank">
+              <a class="nav-link" target="_blank">
                 <i class="ni ni-spaceship"></i>
                 <span class="nav-link-text">Pending Orders</span>
               </a>
@@ -128,7 +128,7 @@
           <!-- Navigation -->
           <ul class="navbar-nav mb-md-3">
             <li class="nav-item">
-              <a class="nav-link" href="addCategory.php" target="_blank">
+              <a class="nav-link" target="_blank">
                 <i class="ni ni-spaceship"></i>
                 <span class="nav-link-text">Active Services</span>
               </a>
@@ -148,7 +148,7 @@
           <!-- Navigation -->
           <ul class="navbar-nav mb-md-3">
             <li class="nav-item">
-              <a class="addCategory nav-link" href="addCategory.php" target="_blank">
+              <a class="addCategory nav-link" target="_blank">
                 <i class="ni ni-spaceship"></i>
                 <span class="nav-link-text">All User List</span>
               </a>
@@ -168,7 +168,7 @@
           <!-- Navigation -->
           <ul class="navbar-nav mb-md-3">
             <li class="nav-item">
-              <a class="nav-link" href="addCategory.php" target="_blank">
+              <a class="nav-link" target="_blank">
                 <i class="ni ni-spaceship"></i>
                 <span class="nav-link-text">Add New Blog</span>
               </a>
@@ -188,7 +188,7 @@
           <!-- Navigation -->
           <ul class="navbar-nav mb-md-3">
             <li class="nav-item">
-              <a class="nav-link" href="addCategory.php" target="_blank">
+              <a class="nav-link" target="_blank">
                 <i class="ni ni-spaceship"></i>
                 <span class="nav-link-text">Update Company Info</span>
               </a>

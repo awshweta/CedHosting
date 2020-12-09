@@ -11,8 +11,9 @@ else {
 } 
 if(isset($_SESSION['user'])) {
 	if($_SESSION['user']['role']==1) { ?>
-<?php include_once('header.php'); 
-include_once("sidebar.php"); ?>
+<?php include('header.php'); 
+
+include("sidebar.php"); ?>
  
   <!-- Main content -->
   <div class="main-content" id="panel">
@@ -273,7 +274,7 @@ include_once("sidebar.php"); ?>
             </div>
           </div>
           <!-- Card stats -->
-          <div class="row">
+          <div class="row datail">
             <div class="col-xl-3 col-md-6">
               <div class="card card-stats">
                 <!-- Card body -->
