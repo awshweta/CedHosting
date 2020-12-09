@@ -1,4 +1,5 @@
 <?php
+session_start();
 class DbCon {
 	public $conn;
 	public function __construct() {

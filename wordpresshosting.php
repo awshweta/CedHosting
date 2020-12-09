@@ -1,5 +1,18 @@
 <?php include("header.php"); ?>
 		<!---singleblog--->
+		<!--script-->
+	<link rel="stylesheet" href="css/swipebox.css">
+			<script src="js/jquery.swipebox.min.js"></script> 
+			    <script type="text/javascript">
+					jQuery(function($) {
+						$(".swipebox").swipebox();
+					});
+				</script>			
+</head>
+<body>
+	<!---header--->
+	<?php include_once("mid.php"); ?>	
+	<!---header--->
 				<div class="content">
 					<div class="linux-section">
 						<div class="container">

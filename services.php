@@ -1,5 +1,30 @@
 <?php include("header.php"); ?>
 		<!--services--->
+		<!--script-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+	<script src="js/modernizr.custom.97074.js"></script>
+	<script src="js/jquery.chocolat.js"></script>
+	<link rel="stylesheet" href="css/chocolat.css" type="text/css" media="screen">
+	<!--lightboxfiles-->
+	<script type="text/javascript">
+		$(function() {
+			$('.team a').Chocolat();
+		});
+	</script>	
+	<script type="text/javascript" src="js/jquery.hoverdir.js"></script>	
+	<script type="text/javascript">
+		$(function() {
+
+			$(' #da-thumbs > li ').each( function() { $(this).hoverdir(); } );
+
+		});
+	</script>				
+</head>
+<body>
+	<!---header--->
+	<?php include_once("mid.php"); ?>	
+	<!---header--->
 				<div class="content">
 					<div class="brilliant-section">
 						<div class="container">

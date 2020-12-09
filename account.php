@@ -18,50 +18,73 @@ if(isset($_POST['submit'])) {
 	$rePass = isset($_POST['rePass']) ? $_POST['rePass'] : "";
 	$db = new Dbcon();
 	$user = new User();
-	$pattern = "/^\w+@[a-zA-z_]+?\.[a-zA-Z]{2,3}$/";
-	$mobileval = '/^[1-9][0-9]{9}$/';
+	$pattern = "/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/";
+	//echo strlen($mobile);
+	$mobileval="";
 	$split = str_split($mobile, 1);
 	$count =0;
-	echo count($split[1]);
-	if (preg_match ($mobileval, $mobile) ) {  
-		for($i=0;$i<count($split)-2; $i++) {
-			if($split[$i] == $split[$i++]) {
-				$count++;
-				continue;
+	//echo $split[5];
+	if(strlen($mobile) == 10) {
+		$mobileval = '/^[1-9]{1}[0-9]{9}$/';
+		if (preg_match ($mobileval, $mobile) ) {  
+			
+			foreach($split as $k=>$val) {
+				if($k < 9) {
+					if($split[$k] == $split[$k+1]) {
+						$count++;
+					}
+				}
 			}
-			else {
-				$r = false;
-				break;
+			if($count == 9) {
+				$mobileErr = "All value should not be identical";
+				$r = true;
 			}
 		}
-		if($count == 9) {
-			$mobileErr = "all value are same";
+		else {
+			$mobileErr = "Decimal is not allowed(.),
+			-Only numeric values should be entered,
+			-Maximum 10 digits excluding preceding 0";
 			$r = true;
 		}
 	}
-	else {
-		$mobileErr = "Please enter 10 digit";
-		$r = true;
+	if(strlen($mobile) == 11) {
+		$mobileval = '/^[0][1-9][0-9]{9}$/';
+		if (preg_match ($mobileval, $mobile) ) {  
+			foreach($split as $k=>$val) {
+				if($k >0 && $k <10) {
+					if($split[$k] == $split[$k+1]) {
+						$count++;
+					}
+				}
+			}
+			if($count == 9) {
+				$mobileErr = "All value should not be identical";
+				$r = true;
+			}
+		}
+		else {
+			$mobileErr = "Decimal is not allowed(.),
+			-Only numeric values should be entered,
+			-Maximum 11 digits including preceding 0,
+			-Number should not contain more than one 0's in starting,";
+			$r = true;
+		}
 	}
 	if (!preg_match ($pattern, $email) ) {  
-		$emailErr = "Please enter character only or follow name@example.com format";
+		$emailErr = "Please follow name@example.com format";
 		$r = true;
 	}  
 	if(!preg_match('/^([a-zA-Z]+\s?)*$/', $name)) { 
 		$nameErr ="please enter alphabet character only and more than one space are not allow between word";
 		$r = true;
 	}
-	if(!preg_match('/^([a-zA-Z]+\s?)*$/', $ans)) { 
+	if(!preg_match('/^([a-zA-Z0-9]+\s?)*$/', $ans)) { 
 		$ansErr ="please enter alphabet character only and more than one space are not allow between word";
 		$r = true;
 	}
 	if($pass != $rePass) {
 		$repassErr = "password does not match";
 		$r = true;
-	}
-	if(!preg_match("/^(?=.*\d)(?=.*[@#\-_$%^&+=§!\?])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z@#\-_$%^&+=§!\?]{8,16}$/", $pass)) {
-		$r = true;
-		$passErr ="Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character";
 	}
 	if(!preg_match("/^(?=.*\d)(?=.*[@#\-_$%^&+=§!\?])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z@#\-_$%^&+=§!\?]{8,16}$/", $pass)) {
 		$r = true;
@@ -76,6 +99,17 @@ if(isset($_POST['submit'])) {
 
 }
 ?>
+<link rel="stylesheet" href="css/swipebox.css">
+			<script src="js/jquery.swipebox.min.js"></script> 
+			    <script type="text/javascript">
+					jQuery(function($) {
+						$(".swipebox").swipebox();
+					});
+				</script>		
+</head>
+<body>
+	<!---header--->
+	<?php include_once("mid.php"); ?>	
 <!---login--->
 <div class="content">
 	<!-- registration -->
@@ -99,7 +133,7 @@ if(isset($_POST['submit'])) {
 						</div>
 						<div>
 							<span>Security Question<label>*</label></span>
-							<select name="cab" class="cab custom-select" id="inputGroupSelect03">
+							<select name="ques" class="ques custom-select" id="inputGroupSelect03">
 								<option selected disabled>Choose</option>
 								<option value="What was your childhood nickname?">What was your childhood nickname?</option>
 								<option value="What is the name of your favourite childhood friend?">What is the name of your favourite childhood friend?</option>

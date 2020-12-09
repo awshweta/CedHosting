@@ -1,24 +1,49 @@
 <?php
+	$emailErr ="";
 	include_once("User.php");
 	if(isset($_POST['submit'])) {
 		$email = isset($_POST['email']) ?  trim($_POST['email']) :'';
 		$pass = isset($_POST['pass']) ? $_POST['pass'] : '';
 		//echo $email;
 		//echo $pass
+		$r = false;
 		$user = new User();
-		$ret = $user->login($email , $pass);
-		if($ret['success'] != "") {
-			
-			//echo '<script>alert("'.$ret['success'].'");</script>';
-			header('Location: index.php');
-		}
-		else {
-			echo '<script>alert("'.$ret['error'].'");</script>';
+		$pattern = "/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/";
+		if (!preg_match ($pattern, $email) ) {  
+			$emailErr = "Please follow name@example.com format";
+			$r = true;
+		} 
+		if($r == false) { 
+			$ret = $user->login($email , $pass);
+			if($ret['success'] != "") {
+				if($ret['admin'] == "yes") {
+					header("Location:adminDashboard/index.php");
+				}
+				if($ret['admin'] == "no") {
+					header('Location: index.php');
+				}
+			}
+			else {
+				echo '<script>alert("'.$ret['error'].'");</script>';
+			}
 		}
 	}
 ?>
 <?php include_once("header.php"); ?>
 		<!---login--->
+		<!--script-->
+	<link rel="stylesheet" href="css/swipebox.css">
+			<script src="js/jquery.swipebox.min.js"></script> 
+			    <script type="text/javascript">
+					jQuery(function($) {
+						$(".swipebox").swipebox();
+					});
+				</script>			
+</head>
+<body>
+	<!---header--->
+	<?php include_once("mid.php"); ?>	
+	<!---header--->
 			<div class="content">
 				<div class="main-1">
 					<div class="container">
@@ -36,6 +61,7 @@
 									  <div>
 										<span>Email Address<label>*</label></span>
 										<input type="email" name="email" required> 
+										<span class="error"><?php echo $emailErr; ?></span>
 									  </div>
 									  <div>
 										<span>Password<label>*</label></span>

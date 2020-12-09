@@ -57,11 +57,20 @@ body{
     background: none!important;
     border: none!important;
 }
+.navbar-brand h1 img {
+    width:70%;
+    z-index: -1;
+    border-radius: 100%;
+}
 .navbar-brand h1 a {
-    font-size: 1.4em;
+    font-size: .57em;
+    z-index: 1;
+    position: absolute;
     text-decoration: none;
     color: #222;
-	font-family: 'Voltaire', sans-serif;
+    font-family: 'Voltaire', sans-serif;
+    top:60%;
+    left:15px;
 }
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
     color: #7277d5;
@@ -2292,9 +2301,21 @@ a.button2 {
 }
 }
 @media(max-width:991px){
-.navbar-brand h1 a {
-    font-size: 1.2em
-}
+    .navbar-brand h1 img {
+        width:60%;
+        z-index: -1;
+        border-radius: 100%;
+    }
+    .navbar-brand h1 a {
+        font-size: .5em;
+        z-index: 1;
+        position: absolute;
+        text-decoration: none;
+        color: #222;
+        font-family: 'Voltaire', sans-serif;
+        top:60%;
+        left:31px;
+    }
 .nav > li > a {
     padding: 10px 8px;
 }
@@ -2620,6 +2641,9 @@ a.button2 {
 }
 }
 @media(max-width:640px){
+    .navbar-brand h1 img {
+        width: 60%;
+    }
 .navbar-brand h1 a {
     font-size: 1.1em;
 }
@@ -2893,8 +2917,20 @@ a.button2 {
 .header {
     padding: 1.5em 0;
 }
+.navbar-brand h1 img {
+    width:60%;
+    z-index: -1;
+    border-radius: 100%;
+}
 .navbar-brand h1 a {
-    font-size: 1em;
+    font-size: 0.35em;
+    z-index: 1;
+    position: absolute;
+    text-decoration: none;
+    color: #222;
+    font-family: 'Voltaire', sans-serif;
+    left: 9px;
+    top: 86%;
 }
 .banner-grids {
     padding: 3em 0 3em;
@@ -3376,9 +3412,21 @@ a.button2 {
 }
 }
 @media (max-width: 320px){
-.navbar-brand h1 a {
-    font-size: .95em;
-}
+    .navbar-brand h1 img {
+        width:60%;
+        z-index: -1;
+        border-radius: 100%;
+    }
+    .navbar-brand h1 a {
+        font-size: .37em;
+        z-index: 1;
+        position: absolute;
+        text-decoration: none;
+        color: #222;
+        font-family: 'Voltaire', sans-serif;
+        top: 84%;
+        left: 3px;
+    }
 .header {
     padding: 1em 0;
 }

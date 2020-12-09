@@ -1,4 +1,27 @@
 <?php include("header.php"); ?>
+<!--script-->
+	<script src="js/modernizr.custom.97074.js"></script>
+	<script src="js/jquery.chocolat.js"></script>
+	<link rel="stylesheet" href="css/chocolat.css" type="text/css" media="screen">
+	<!--lightboxfiles-->
+	<script type="text/javascript">
+		$(function() {
+			$('.team a').Chocolat();
+		});
+	</script>	
+	<script type="text/javascript" src="js/jquery.hoverdir.js"></script>	
+	<script type="text/javascript">
+		$(function() {
+
+			$(' #da-thumbs > li ').each( function() { $(this).hoverdir(); } );
+
+		});
+	</script>				
+</head>
+<body>
+	<!---header--->
+	<?php include_once("mid.php"); ?>	
+	<!---header--->
 	<!---banner--->
 		<div class="banner">
 			<div class="container">
