@@ -1,16 +1,13 @@
 <?php $r = false;
-session_start();
+include_once("../Dbcon.php");
+include_once("../Product.php");
 $ret = "";
-if (isset($_SESSION['user'])) {
-	if($_SESSION['user']['role'] == 0) {
-		header("Location:customerDashboard.php");
-	}
-}
-else {
-	$r = false;
-} 
 if(isset($_SESSION['user'])) {
-	if($_SESSION['user']['role']==1) { ?>
+	if($_SESSION['user']['role']==1) { 
+    $db = new DbCon();
+		$product = new Product();
+		$getCategory = $product->getCategory($db->conn); 
+    ?>
 <?php include_once('header.php'); 
 include_once("sidebar.php"); ?>
  
@@ -273,74 +270,65 @@ include_once("sidebar.php"); ?>
             </div>
           </div>
           <!-- Card stats -->
-      <!-- Table -->
-      <div class="row justify-content-center">
-        <div class="col-lg-6 col-md-8">
-          <div class="card bg-secondary border-0">
-            <div class="card-header bg-transparent pb-5">
-              <div class="text-muted text-center mt-2 mb-4"><small>Sign up with</small></div>
-              <div class="text-center">
-                <a href="#" class="btn btn-neutral btn-icon mr-4">
-                  <span class="btn-inner--icon"><img src="../assets/img/icons/common/github.svg"></span>
-                  <span class="btn-inner--text">Github</span>
-                </a>
-                <a href="#" class="btn btn-neutral btn-icon">
-                  <span class="btn-inner--icon"><img src="../assets/img/icons/common/google.svg"></span>
-                  <span class="btn-inner--text">Google</span>
-                </a>
+            <!-- Table -->
+            <div class="row justify-content-center">
+              <div class="col-lg-6 col-md-8">
+                <div class="card bg-secondary border-0">
+                  <div class="card-header bg-transparent pb-5">
+                    <div class="text-muted text-center mt-2 mb-4"><small>Add Category</small></div>
+                  </div>
+                  <div class="card-body px-lg-5 py-lg-5">
+                    <form role="form">
+                      <div class="form-group">
+                        <div class="input-group input-group-merge input-group-alternative mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                          </div>
+                          <input class="form-control" placeholder="Name" type="text">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="input-group input-group-merge input-group-alternative mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                          </div>
+                          <input class="form-control" placeholder="link" type="url">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="input-group input-group-merge input-group-alternative">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                          </div>
+                          <?php
+                            if($getCategory->num_rows > 0) {
+                              while($row = 	$getCategory->fetch_assoc()) {?>
+                                  <input class="form-control" placeholder="Hosting" value="<?php echo $row['prod_name']; ?>" dissable type="text">
+                              <?php }
+                            }
+                            ?>
+                        </div>
+                      </div>
+                      <div class="row my-4">
+                        <div class="col-12">
+                          <div class="custom-control custom-control-alternative custom-checkbox">
+                            <input class="custom-control-input" id="customCheckRegister" type="checkbox">
+                            <label class="custom-control-label" for="customCheckRegister">
+                              <span class="text-muted">I agree with the <a href="#!">Privacy Policy</a></span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="text-center">
+                        <button type="button" class="btn btn-primary mt-4">Create Category</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="card-body px-lg-5 py-lg-5">
-              <div class="text-center text-muted mb-4">
-                <small>Or sign up with credentials</small>
-              </div>
-              <form role="form">
-                <div class="form-group">
-                  <div class="input-group input-group-merge input-group-alternative mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
-                    </div>
-                    <input class="form-control" placeholder="Name" type="text">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="input-group input-group-merge input-group-alternative mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="ni ni-email-83"></i></span>
-                    </div>
-                    <input class="form-control" placeholder="Email" type="email">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="input-group input-group-merge input-group-alternative">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                    </div>
-                    <input class="form-control" placeholder="Password" type="password">
-                  </div>
-                </div>
-                <div class="text-muted font-italic"><small>password strength: <span class="text-success font-weight-700">strong</span></small></div>
-                <div class="row my-4">
-                  <div class="col-12">
-                    <div class="custom-control custom-control-alternative custom-checkbox">
-                      <input class="custom-control-input" id="customCheckRegister" type="checkbox">
-                      <label class="custom-control-label" for="customCheckRegister">
-                        <span class="text-muted">I agree with the <a href="#!">Privacy Policy</a></span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                <div class="text-center">
-                  <button type="button" class="btn btn-primary mt-4">Create account</button>
-                </div>
-              </form>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-
       </div>
     </div>
     <!-- Page contentif(isset($_SESSION['user'])) {
@@ -621,49 +609,8 @@ include_once("sidebar.php"); ?>
         </div>
       </div>
       <!-- Footer -->
-      <footer class="footer pt-0">
-        <div class="row align-items-center justify-content-lg-between">
-          <div class="col-lg-6">
-            <div class="copyright text-center  text-lg-left  text-muted">
-              &copy; 2020 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-              <li class="nav-item">
-                <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a>
-              </li>
-              <li class="nav-item">
-                <a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About Us</a>
-              </li>
-              <li class="nav-item">
-                <a href="http://blog.creative-tim.com" class="nav-link" target="_blank">Blog</a>
-              </li>
-              <li class="nav-item">
-                <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" class="nav-link" target="_blank">MIT License</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </footer>
-    </div>
-  </div>
-  <!-- Argon Scripts -->
-  <!-- Core -->
-  <script src="assets/vendor/jquery/dist/jquery.min.js"></script>
-  <script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/js-cookie/js.cookie.js"></script>
-  <script src="assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
-  <script src="assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
-  <!-- Optional JS -->
-  <script src="assets/vendor/chart.js/dist/Chart.min.js"></script>
-  <script src="assets/vendor/chart.js/dist/Chart.extension.js"></script>
-  <!-- Argon JS -->
-  <script src="assets/js/argon.js?v=1.2.0"></script>
-</body>
-
-</html>
- <?php  }
+ <?php include("footer.php");
+  }
 }
  else {
   header('location:../login.php');
