@@ -64,13 +64,13 @@
           <!-- Navigation -->
           <ul class="navbar-nav mb-md-3">
             <li class="nav-item">
-              <a class="nav-link" href="addCategory.php" target="_blank">
+              <a class="nav-link"  href="addCategory.php" target="_blank">
                 <i class="ni ni-spaceship"></i>
                 <span class="nav-link-text">Create Category</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" target="_blank">
+              <a class="nav-link" href="addProduct.php" target="_blank">
                 <i class="ni ni-palette"></i>
                 <span class="nav-link-text">Add Product</span>
               </a>

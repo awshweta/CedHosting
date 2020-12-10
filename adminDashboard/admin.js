@@ -1,82 +1,138 @@
-$(document).ready(function(){
-    $('.addCategory').click(function(){
-    html = ' <div class="container mt--8 pb-5">'+
-        '<div class="row justify-content-center">'+
-        '<div class="col-lg-6 col-md-8">'+
-            '<div class="card bg-secondary border-0">'+
-            '<div class="card-header bg-transparent pb-5">'+
-                '<div class="text-muted text-center mt-2 mb-4"><small>Sign up with</small></div>'+
-                '<div class="text-center">'+
-                '<a href="#" class="btn btn-neutral btn-icon mr-4">'+
-                    '<span class="btn-inner--icon"><img src="../assets/img/icons/common/github.svg"></span>'+
-                    '<span class="btn-inner--text">Github</span>'+
-                '</a>'+
-                '<a href="#" class="btn btn-neutral btn-icon">'+
-                    '<span class="btn-inner--icon"><img src="../assets/img/icons/common/google.svg"></span>'+
-                    '<span class="btn-inner--text">Google</span>'+
-                '</a>'+
-                '</div>'+
-            '</div>'+
-            '<div class="card-body px-lg-5 py-lg-5">'+
-                '<div class="text-center text-muted mb-4">'+
-                '<small>Or sign up with credentials</small>'+
-                '</div>'+
-                '<form role="form">'+
-                '<div class="form-group">'+
+$('.display').on("click" ,'.deleteCategory',function() {
+    if(confirm("Are you sure you want to delete this Category?")) {
+        var id= $(this).data('id');
+        $.ajax({
+            type: "POST",
+            url: "request.php",
+            data:{ id:id , action :'deleteCategory' },
+            dataType: "JSON",
+            success:function( msg ) {
+               alert(msg.category);
+               location.reload();
+            },
+            error:function() {
+                alert("error");
+            }
+        }); 
+    }   
+});
+$('.display').on("click" ,'.enableCategory',function() {
+    if(confirm("Are you sure you want to enable this Category?")) {
+        var id= $(this).data('id');
+        $.ajax({
+            type: "POST",
+            url: "request.php",
+            data:{ id:id , action :'enableCategory' },
+            dataType: "JSON",
+            success:function( msg ) {
+               alert(msg);
+               location.reload();
+            },
+            error:function() {
+                alert("error");
+            }
+        }); 
+    }   
+});
+$('.display').on("click" ,'.disableCategory',function() {
+    if(confirm("Are you sure you want to enable this Category?")) {
+        var id= $(this).data('id');
+        $.ajax({
+            type: "POST",
+            url: "request.php",
+            data:{ id:id , action :'disableCategory' },
+            dataType: "JSON",
+            success:function( msg ) {
+               alert(msg);
+               location.reload();
+            },
+            error:function() {
+                alert("error");
+            }
+        }); 
+    }   
+});
+$('#form').on("click" ,'.saveCategory',function() {
+    var id= $(this).data('id');
+    var name = $(".cat").val();
+    var link = $('.url').val();
+    console.log(name);
+    $.ajax({
+        type: "POST",
+        url: "request.php",
+        data:{ id:id, name:name, link:link , action :'saveCategory' },
+        dataType: "JSON",
+        success:function( msg ) {
+            alert(msg);
+            location.reload();
+        },
+        error:function() {
+            alert("error");
+        }
+    }); 
+});
+$('.display').on("click" ,'.editCategory',function() {
+    if(confirm("Are you sure you want to edit this Category?")) {
+        var id= $(this).data('id');
+        var html="";
+        $.ajax({
+            type: "POST",
+            url: "request.php",
+            data:{ id:id , action :'editCategory' },
+            dataType: "JSON",
+            success:function( msg ) {
+                console.log(msg.length);
+                for (var i = 0; i < msg.length; i++) {
+                    html = '<form id="form" role="form" method="POST"><div class="form-group">'+
                     '<div class="input-group input-group-merge input-group-alternative mb-3">'+
-                    '<div class="input-group-prepend">'+
+                      '<div class="input-group-prepend">'+
                         '<span class="input-group-text"><i class="ni ni-hat-3"></i></span>'+
-                    '</div>'+
-                    '<input class="form-control" placeholder="Name" type="text">'+
-                    '</div>'+
+                      '</div>'+
+                      '<input class="cat form-control"   placeholder="Name" value="'+msg[i]["prod_name"]+'" name="name" type="text">'+
+                   '</div>'+
+                   '<div class="form-group">'+
+                        '<div class="input-group input-group-merge input-group-alternative mb-3">'+
+                          '<div class="input-group-prepend">'+
+                            '<span class="input-group-text"><i class="ni ni-email-83"></i></span>'+
+                          '</div>'+
+                          '<input class="url form-control" value="'+msg[i]['link']+'"  placeholder="link" name="link" type="url">'+
+                        '</div>'+
+                      '</div>'+
+                  '</div>'+
+                  '<div class="text-center">'+
+                 '<button type="button" name="saveCategory" data-id="'+msg[i]['id']+'" class="saveCategory btn btn-primary mt-4">Update Category</button>'+
                 '</div>'+
-                '<div class="form-group">'+
-                    '<div class="input-group input-group-merge input-group-alternative mb-3">'+
-                    '<div class="input-group-prepend">'+
-                    '<span class="input-group-text"><i class="ni ni-email-83"></i></span>'+
-                    '</div>'+
-                    '<input class="form-control" placeholder="Email" type="email">'+
-                    '</div>'+
-                '</div>'+
-                '<div class="form-group">'+
-                    '<div class="input-group input-group-merge input-group-alternative">'+
-                    '<div class="input-group-prepend">'+
-                        '<span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>'+
-                    '</div>'+
-                    '<input class="form-control" placeholder="Password" type="password">'+
-                    '</div>'+
-                '</div>'+
-                '<div class="text-muted font-italic"><small>password strength: <span class="text-success font-weight-700">strong</span></small></div>'+
-                '<div class="row my-4">'+
-                    '<div class="col-12">'+
-                    '<div class="custom-control custom-control-alternative custom-checkbox">'+
-                        '<input class="custom-control-input" id="customCheckRegister" type="checkbox">'+
-                        '<label class="custom-control-label" for="customCheckRegister">'+
-                        '<span class="text-muted">I agree with the <a href="#!">Privacy Policy</a></span>'+
-                        '</label>'+
-                    '</div>'+
-                    '</div>'+
-                '</div>'+
-                '<div class="text-center">'+
-                    '<button type="button" class="btn btn-primary mt-4">Create account</button>'+
-                '</div>'+
-                '</form>'+
-            '</div>'+
-            '</div>'+
-        '</div>'+
-        '</div>'+
-    '</div>'+
-    '</div>';
-    $(".detail").html(html);
+                  '</form>';
+                }
+                $("#form").html(html);
+            },
+            error:function() {
+                alert("error");
+            }
+        }); 
+    }   
+});
+$(document).ready(function() {
+    $('.display').DataTable({
+        "ajax": 'request.php?getProduct=1'
+    });
+    $('.addCategory').click(function(){
+        var name = $('.name').val();
+        var link = $('.link').val();
+        console.log(name);
+        console.log(link);
+        $.ajax({
+            type: "POST",
+            url: "request.php",
+            data:{ name:name ,link:link, action :'addCategory' },
+            dataType: "JSON",
+            success:function( msg ) {
+                alert(msg);
+                location.reload();
+            },
+            error:function() {
+                alert("error");
+            }
+        });	
     });
 });
-<div class="col-xl-3 col-md-6">
-<div class="card card-stats">
-  <div class="card-body">
-    <div class="row">
-      <div class="col">
-       </div>
-    </div>
-  </div>
-</div>
-</div>
