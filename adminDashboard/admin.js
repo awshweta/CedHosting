@@ -81,7 +81,7 @@ $('.display').on("click" ,'.editCategory',function() {
             data:{ id:id , action :'editCategory' },
             dataType: "JSON",
             success:function( msg ) {
-                console.log(msg.length);
+                //console.log(msg.length);
                 for (var i = 0; i < msg.length; i++) {
                     html = '<form id="form" role="form" method="POST"><div class="form-group">'+
                     '<div class="input-group input-group-merge input-group-alternative mb-3">'+
@@ -116,6 +116,9 @@ $(document).ready(function() {
     $('.display').DataTable({
         "ajax": 'request.php?getProduct=1'
     });
+    $('.productTable').DataTable({
+        "ajax": 'request.php?getProductTable=1'
+    });
     $('.addCategory').click(function(){
         var name = $('.name').val();
         var link = $('.link').val();
@@ -134,5 +137,55 @@ $(document).ready(function() {
                 alert("error");
             }
         });	
+    });
+    $('.addProduct').click(function() {
+        var name = $('.name').val();
+        var category = $('.category').val();
+        var link = $('.url').val();
+        var mplan = $('.mplan').val();
+        var aplan = $('.aplan').val();
+        var sku = $('.sku').val();
+        var web = $('.web').val();
+        var bandwidth = $('.bandwidth').val();
+        var domain = $('.domain').val();
+        var language = $('.language').val();
+        var mailbox = $('.mailbox').val();
+        var r = false;
+        console.log(name);
+        var letters = /^([a-zA-Z]+\s?)*$/;
+        if(name != "" && category != "" && mplan !="" && aplan !="" && sku !="" && web !="" && bandwidth!="" && domain !="" && language !="" && mailbox !="") {
+            if(!name.match(letters)) {
+                alert("please enter alphabet character only and more than one space are not allow between word");
+                r=true;
+            }
+            if(r == false) {
+                $.ajax({
+                    type: "POST",
+                    url: "request.php",
+                    data:{ name:name,
+                        category:category,
+                        mplan:mplan,
+                        aplan:aplan,
+                        sku:sku,
+                        web:web,
+                        bandwidth:bandwidth ,
+                        domain:domain,
+                        language:language,
+                        mailbox:mailbox,
+                        link:link, 
+                        action :'addProduct' },
+                        dataType: "JSON",
+                        success:function( msg ) {
+                            alert(msg);
+                    },
+                    error:function() {
+                        alert("error");
+                    }
+                });	
+            }
+        }
+        else {
+            alert("please fill all field");
+        }
     });
 });

@@ -5,8 +5,9 @@ $ret = "";
 if(isset($_SESSION['user'])) {
 	if($_SESSION['user']['role']==1) { 
     $db = new DbCon();
-		$product = new Product();
+	$product = new Product();
     $getCategory = $product->getCategory($db->conn); 
+    $result =$product->fetchCategory($db->conn);
     ?>
 <?php include_once('header.php'); 
 include_once("sidebar.php"); ?>
@@ -273,55 +274,159 @@ include_once("sidebar.php"); ?>
           <!-- Card stats -->
             <!-- Table -->
             <div class="row justify-content-center">
-              <div class="col-lg-6 col-md-8">
+              <div class="col-lg-10 col-md-10">
                 <div class="card bg-secondary border-0">
                   <div class="card-header bg-transparent pb-5">
-                    <div class="text-muted text-center mt-2 mb-4"><small>Add Category</small></div>
+                    <div class="text-muted text-center mt-2 mb-4"><small>Add Product</small></div>
                   </div>
                   <div class="card-body px-lg-5 py-lg-5">
                     <form role="form" method="POST">
-                      <div class="form-group">
-                        <div class="input-group input-group-merge input-group-alternative mb-3">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
-                          </div>
-                          <input class="name form-control"   placeholder="Name" name="name" type="text">
+                        <div class="pb-5">
+                            <h1 id="header_1" class="form-header" data-component="header">
+                                Create New Product
+                            </h1>
+                            <div id="subHeader_1" class="form-subHeader ">
+                                Enter Product Details
+                            </div>
                         </div>
-                      </div>
-                      <div class="form-group">
-                        <div class="input-group input-group-merge input-group-alternative mb-3">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="ni ni-email-83"></i></span>
-                          </div>
-                          <input class="link form-control" placeholder="link" name="link" type="url">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <div class="input-group input-group-merge input-group-alternative">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                          </div>
-                          <?php
-                            if ($getCategory->num_rows > 0) {
-                              while ($row=$getCategory->fetch_assoc()) {?>
-                                  <input class="form-control" placeholder="Hosting" value="<?php echo $row['prod_name']; ?>" type="text" disabled>
-                              <?php }
-                            }
-                            ?>
-                        </div>
-                      </div>
-                      <div class="row my-4">
-                        <div class="col-12">
-                          <div class="custom-control custom-control-alternative custom-checkbox">
-                            <input class="custom-control-input" id="customCheckRegister" type="checkbox">
-                            <label class="custom-control-label" for="customCheckRegister">
-                              <span class="text-muted">I agree with the <a href="#!">Privacy Policy</a></span>
+                        <li class="form-line" data-type="control_dropdown" id="id_3">
+                            <label class="form-label form-label-top form-label-auto" id="label_3" for="input_3">
+                                Select Product Category
+                                <span class="error form-required">*</span>
                             </label>
-                          </div>
+                            <div class="input-group mb-3">
+                                <select class="category custom-select" id="inputGroupSelect01">
+                                    <option selected disabled>Choose...</option>
+                                    <?php
+                                      if ($result->num_rows > 0) {
+                                        while ($row=$result->fetch_assoc()) {?>
+                                              <option value="<?php echo $row['prod_name']; ?>"><?php echo $row['prod_name']; ?></option>
+                                        <?php }
+                                      }
+                                      ?>
+                                </select>
+                            </div>
+                        </li>
+                        <li class="form-line" data-type="control_dropdown" id="id_3">
+                            <label class="form-label form-label-top form-label-auto" id="label_3" for="input_3">
+                            Enter Product Name
+                            <span class="error form-required">*</span>
+                            </label>
+                            <div class="form-group">
+                                <div class="input-group input-group-merge input-group-alternative mb-3">
+                                <input class="name form-control"   placeholder="Name" name="name" type="text">
+                                </div>
+                            </div>
+                        </li>
+                        <li class="form-line" data-type="control_dropdown" id="id_3">
+                            <label class="form-label form-label-top form-label-auto" id="label_3" for="input_3">
+                            Page Url
+                            </label>
+                            <div class="form-group">
+                                <div class="input-group input-group-merge input-group-alternative mb-3">
+                                <input class="url form-control"   placeholder="url" name="url" type="url">
+                                </div>
+                            </div>
+                        </li>
+                        <div class="pb-5">
+                            <h1 id="header_1" class="form-header" data-component="header">
+                                Product Description
+                            </h1>
+                            <div id="subHeader_1" class="form-subHeader ">
+                                Enter Product Description Below
+                            </div>
                         </div>
-                      </div>
+                        <li class="form-line" data-type="control_dropdown" id="id_3">
+                            <label class="form-label form-label-top form-label-auto" id="label_3" for="input_3">
+                                Enter Monthly Price 
+                                <span class="form-required">*</span>
+                            </label>
+                            <div class="error form-group">
+                                <div class="input-group input-group-merge input-group-alternative mb-3">
+                                <input class="mplan form-control"   placeholder="This would be Monthly Plan" name="name" type="text">
+                                </div>
+                            </div>
+                        </li>
+                        <li class="form-line" data-type="control_dropdown" id="id_3">
+                            <label class="form-label form-label-top form-label-auto" id="label_3" for="input_3">
+                                Enter Annual Price 
+                            <span class="error form-required">*</span>
+                            </label>
+                            <div class="form-group">
+                                <div class="input-group input-group-merge input-group-alternative mb-3">
+                                <input class="aplan form-control"   placeholder="This would be Annual Price" name="name" type="text">
+                                </div>
+                            </div>
+                        </li>
+                        <li class="form-line" data-type="control_dropdown" id="id_3">
+                            <label class="form-label form-label-top form-label-auto" id="label_3" for="input_3">
+                                SKU<span class="error form-required">*</span>
+                            </label>
+                            <div class="form-group">
+                                <div class="input-group input-group-merge input-group-alternative mb-3">
+                                <input class="sku form-control"   placeholder="Name" name="name" type="url">
+                                </div>
+                            </div>
+                        </li>
+                        <div class="pb-5">
+                            <h1 id="header_1" class="form-header" data-component="header">
+                                Features
+                            </h1>
+                        </div>
+                        <li class="form-line" data-type="control_dropdown" id="id_3">
+                            <label class="form-label form-label-top form-label-auto" id="label_3" for="input_3">
+                                Web Space(in GB)
+                                <span class="error form-required">*</span>
+                            </label>
+                            <div class="form-group">
+                                <div class="input-group input-group-merge input-group-alternative mb-3">
+                                <input class="web form-control"   placeholder="Enter 0.5 for 512 MB" name="name" type="text">
+                                </div>
+                            </div>
+                        </li>
+                        <li class="form-line" data-type="control_dropdown" id="id_3">
+                            <label class="form-label form-label-top form-label-auto" id="label_3" for="input_3">
+                                Bandwidth (in GB)
+                            <span class="error form-required">*</span>
+                            </label>
+                            <div class="form-group">
+                                <div class="input-group input-group-merge input-group-alternative mb-3">
+                                <input class="bandwidth form-control"   placeholder="Enter 0.5 for 512 MB" name="name" type="text">
+                                </div>
+                            </div>
+                        </li>
+                        <li class="form-line" data-type="control_dropdown" id="id_3">
+                            <label class="form-label form-label-top form-label-auto" id="label_3" for="input_3">
+                                Free Domain<span class="form-required">*</span>
+                            </label>
+                            <div class="form-group">
+                                <div class="input-group input-group-merge input-group-alternative mb-3">
+                                <input class="domain form-control"   placeholder="Enter 0 if no domain available in this service" name="name" type="url">
+                                </div>
+                            </div>
+                        </li>
+                        <li class="form-line" data-type="control_dropdown" id="id_3">
+                            <label class="form-label form-label-top form-label-auto" id="label_3" for="input_3">
+                            Language / Technology Support<span class="form-required">*</span>
+                            </label>
+                            <div class="form-group">
+                                <div class="input-group input-group-merge input-group-alternative mb-3">
+                                <input class="language form-control"   placeholder="Separate by (,) Ex: PHP, MySQL, MongoDB" name="name" type="url">
+                                </div>
+                            </div>
+                        </li>
+                        <li class="form-line" data-type="control_dropdown" id="id_3">
+                            <label class="form-label form-label-top form-label-auto" id="label_3" for="input_3">
+                            Mailbox <span class="error form-required">*</span>
+                            </label>
+                            <div class="form-group">
+                                <div class="input-group input-group-merge input-group-alternative mb-3">
+                                <input class="mailbox form-control"   placeholder="Enter Number of mailbox will be provided, enter 0 if none" name="name" type="url">
+                                </div>
+                            </div>
+                        </li>
                       <div class="text-center">
-                        <button type="button" name="addCategory" class="addCategory btn btn-primary mt-4">Create Category</button>
+                        <button type="button" name="addProduct" class="addProduct btn btn-primary mt-4">Add Product</button>
                       </div>
                     </form>
                   </div>
@@ -332,50 +437,9 @@ include_once("sidebar.php"); ?>
         </div>
       </div>
     </div>
-
-    <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Edit Category</h4>
-        </div>
-        <div class="modal-body">
-          <form id="form" role="form" method="POST">
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
     <!-- Page contentif(isset($_SESSION['user'])) {
 	if($_SESSION['user']['role']==1) { -->
       <!-- Footer -->
-      <div class="contain container-fluid mt--20">
-      <div class="row">
-      <div class="col-xl-0 col-lg-0">
-      </div>
-        <div class="col-xl-9 col-lg-9">
-        <table class="display" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Link</th>
-                    <th>Available</th>
-                    <th>Date</th>
-                    <th>Action</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-        </table>
-      </div>
-    </div>
-    </div>
     <script src="admin.js"></script>
 <?php include "footer.php";
     } 

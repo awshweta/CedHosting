@@ -1,3 +1,10 @@
+<?php 
+include_once("Product.php");
+include_once("Dbcon.php");
+$product = new Product();
+$db = new Dbcon();
+$result =$product->fetchCategory($db->conn);
+?>
 <div class="header">
 		<div class="container">
 			<nav class="navbar navbar-default">
@@ -28,10 +35,13 @@
 							<li <?php if($filename == 'linuxhosting.php' || $filename == 'wordpresshosting.php' || $filename == 'windowshosting.php' || $filename == 'cmshosting.php') { ?> class="dropdown active"<?php }  ?> >
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hosting<i class="caret"></i></a>
 								<ul class="dropdown-menu">
-									<li><a href="linuxhosting.php">Linux hosting</a></li>
-									<li><a href="wordpresshosting.php">WordPress Hosting</a></li>
-									<li><a href="windowshosting.php">Windows Hosting</a></li>
-									<li><a href="cmshosting.php">CMS Hosting</a></li>
+									<?php
+										if ($result->num_rows > 0) {
+										while ($row=$result->fetch_assoc()) {?>
+											<li><a><?php echo $row['prod_name']; ?></a></li>
+										<?php }
+									}
+									?>
 								</ul>			
 							</li>
 							<li <?php if($filename == 'blog.php') { ?> class="active"<?php }  ?>><a href="blog.php">Blog</a></li>

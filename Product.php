@@ -4,7 +4,7 @@ class Product {
     public $prod_name;
     public $link;
     public function getCategory($conn) {
-		$sql = "SELECT *  FROM tbl_product WHERE `prod_parent_id` = 1 ORDER BY `id` LIMIT 1";
+		$sql = "SELECT *  FROM tbl_product WHERE `prod_parent_id` = 0";
 		$result = $conn->query($sql);
 		return $result;
     }
@@ -19,22 +19,67 @@ class Product {
         }
         return $ret;
     }
+    public function addProduct($name,$category, $link,$mplan,$aplan,$sku,$web,$bandwidth,$domain, $language,$mailbox, $conn) {
+        $arr = array('webspace'=> $web,
+         'bandwidth'=>$bandwidth, 
+         'free_domain'=>$domain, 
+         'language'=>$language, 
+         'mailbox'=>$mailbox );
+        $desc = json_encode($arr);
+        $pid = 1;
+        $prod_available =1;
+        $ret = "";
+        $sql = "SELECT *  FROM tbl_product WHERE `prod_parent_id` ='$pid'  AND `id` NOT IN (SELECT MIN(`id`) FROM tbl_product)";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if ($row['prod_name'] == $category) {
+                    $catId = $row['id'];
+                    //echo $catId;
+                    $sql = "INSERT INTO tbl_product(`prod_parent_id`, `prod_name` , `link`, `prod_available`) VALUES ('".$catId."','".$name."', '".$link."','".$prod_available."')";
+                    if ($conn->query($sql) === true) {
+                        $last_id = $conn->insert_id;
+                        $sqldesc ="INSERT INTO tbl_product_description (`prod_id`,`description`,`mon_price`,`annual_price`,`sku`) VALUES ('$last_id','$desc','$mplan','$aplan','$sku')";
+                        if ($conn->query($sqldesc) === true) {
+                        }
+                        $ret = "product added successfully";
+                    } else {
+                        $ret = $conn->error;
+                    }
+                    return $ret;
+                }
+            }
+        }
+    }
     public function fetchCategory($conn) {
-        $sql = "SELECT *  FROM tbl_product WHERE `prod_parent_id` = 1";
-		$result = $conn->query($sql);
-		return $result;
+        $pid = 1;
+        $sql = "SELECT *  FROM tbl_product WHERE `prod_parent_id` ='$pid'  AND `prod_available`='1'";
+        $result = $conn->query($sql);
+        return $result;
     }
-    public function deleteCategory($id, $conn) {
-        $sql = "DELETE FROM tbl_product WHERE `id`='$id'";
-		if ($conn->query($sql) === TRUE) {
-			$ret = "Record deleted successfully";
-		} else {
-			$ret = "Error deleting record: " . $conn->error;
-		}
-		return $ret;
+    public function fetchAllProduct($conn) {
+        $pid = 1;
+        $data= array();
+        $sql = "SELECT *  FROM tbl_product INNER JOIN tbl_product_description ON tbl_product.id = tbl_product_description.prod_id ";
+        $result = $conn->query($sql);
+        return $result;
     }
-    public function editCategory($id, $conn) {
-        $sql = "SELECT *  FROM tbl_product WHERE `id`='$id'";
+    public function deleteCategory($id, $conn) 
+    {
+        $sql = "DELETE FROM tbl_product WHERE `prod_parent_id` ='1' AND`id`='$id'";
+        if ( $conn->query($sql) == TRUE )
+        {
+            $ret = "Record deleted successfully"; 
+        } 
+        else 
+        {
+            $ret = "Error deleting record: " . $conn->error;
+        }
+        return $ret;
+    }
+    public function editCategory($id, $conn ) 
+    {
+        $sql = "SELECT *  FROM tbl_product WHERE `prod_parent_id` ='1' AND `id`='$id'";
 		$result = $conn->query($sql);
 		return $result;
     }

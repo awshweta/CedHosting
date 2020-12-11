@@ -76,7 +76,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" target="_blank">
+              <a class="nav-link" href="viewProduct.php" target="_blank">
                 <i class="ni ni-ui-04"></i>
                 <span class="nav-link-text">View Products</span>
               </a>

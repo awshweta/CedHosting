@@ -5,8 +5,9 @@ $ret = "";
 if(isset($_SESSION['user'])) {
 	if($_SESSION['user']['role']==1) { 
     $db = new DbCon();
-		$product = new Product();
+	$product = new Product();
     $getCategory = $product->getCategory($db->conn); 
+    $result =$product->fetchCategory($db->conn);
     ?>
 <?php include_once('header.php'); 
 include_once("sidebar.php"); ?>
@@ -272,110 +273,31 @@ include_once("sidebar.php"); ?>
           </div>
           <!-- Card stats -->
             <!-- Table -->
-            <div class="row justify-content-center">
-              <div class="col-lg-6 col-md-8">
-                <div class="card bg-secondary border-0">
-                  <div class="card-header bg-transparent pb-5">
-                    <div class="text-muted text-center mt-2 mb-4"><small>Add Category</small></div>
-                  </div>
-                  <div class="card-body px-lg-5 py-lg-5">
-                    <form role="form" method="POST">
-                      <div class="form-group">
-                        <div class="input-group input-group-merge input-group-alternative mb-3">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
-                          </div>
-                          <input class="name form-control"   placeholder="Name" name="name" type="text">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <div class="input-group input-group-merge input-group-alternative mb-3">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="ni ni-email-83"></i></span>
-                          </div>
-                          <input class="link form-control" placeholder="link" name="link" type="url">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <div class="input-group input-group-merge input-group-alternative">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                          </div>
-                          <?php
-                            if ($getCategory->num_rows > 0) {
-                              while ($row=$getCategory->fetch_assoc()) {?>
-                                  <input class="form-control" placeholder="Hosting" value="<?php echo $row['prod_name']; ?>" type="text" disabled>
-                              <?php }
-                            }
-                            ?>
-                        </div>
-                      </div>
-                      <div class="row my-4">
-                        <div class="col-12">
-                          <div class="custom-control custom-control-alternative custom-checkbox">
-                            <input class="custom-control-input" id="customCheckRegister" type="checkbox">
-                            <label class="custom-control-label" for="customCheckRegister">
-                              <span class="text-muted">I agree with the <a href="#!">Privacy Policy</a></span>
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="text-center">
-                        <button type="button" name="addCategory" class="addCategory btn btn-primary mt-4">Create Category</button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
-
-    <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Edit Category</h4>
-        </div>
-        <div class="modal-body">
-          <form id="form" role="form" method="POST">
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <div class="contain container-fluid mt--20">
+      <div class="row">
+        <div class="col-xl-9 col-lg-9">
+            <table class="productTable" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Link</th>
+                        <th>Available</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+            </table>
         </div>
       </div>
-      
     </div>
-  </div>
     <!-- Page contentif(isset($_SESSION['user'])) {
 	if($_SESSION['user']['role']==1) { -->
       <!-- Footer -->
-      <div class="contain container-fluid mt--20">
-      <div class="row">
-      <div class="col-xl-0 col-lg-0">
-      </div>
-        <div class="col-xl-9 col-lg-9">
-        <table class="display" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Link</th>
-                    <th>Available</th>
-                    <th>Date</th>
-                    <th>Action</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-        </table>
-      </div>
-    </div>
-    </div>
     <script src="admin.js"></script>
 <?php include "footer.php";
     } 

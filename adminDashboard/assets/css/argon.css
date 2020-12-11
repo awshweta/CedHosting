@@ -29841,3 +29841,6 @@ input.datetimepicker[data-color='yellow'] + .bootstrap-datetimepicker-widget.dro
 .contain {
     margin-left: 238px;
 }
+.form-required {
+   color: #f23a3c;
+}

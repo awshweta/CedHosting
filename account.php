@@ -166,7 +166,7 @@ if(isset($_POST['submit'])) {
 					<div class="clearfix"> </div>
 					<div class="register-but">
 						<form>
-							<input type="submit" value="submit" class="btn" name="submit">
+							<input type="submit" value="submit" class="reg btn" name="submit">
 							<div class="clearfix"></div>
 						</form>
 					</div>
