@@ -57,12 +57,65 @@ class Product {
         $result = $conn->query($sql);
         return $result;
     }
+    public function fetchAllCategory($conn) {
+        $pid = 1;
+        $sql = "SELECT *  FROM tbl_product WHERE `prod_parent_id` ='$pid'";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()){
+                $id = $row['prod_parent_id'];
+                $sqlcat = "SELECT *  FROM tbl_product WHERE `id`='$id'";
+                $resultcat = $conn->query($sqlcat);
+                if ($resultcat->num_rows > 0) {
+                    while ($rowcat = $resultcat->fetch_assoc()) {
+                          $category = $rowcat['prod_name'];
+                    }
+                }
+                if($row['prod_available'] == 1) {
+                    $available ="enable";
+                    $data["data"][] = array($category ,$row['prod_name'] ,$row['link'], $available , $row['prod_launch_date'],"<input type='button' data-id=".$row['id']." class='deleteCategory btn btn-danger' name='delete' value='delete'>","<input type='button' data-id=".$row['id']." class='editCategory btn btn-success' name='edit' data-toggle='modal' data-target='#myModal' value='edit'>","<input type='button' data-id=".$row['id']." class='disableCategory btn btn-danger' name='desable' value='disable'>");
+                }
+                else {
+                    $available ="disable";
+                    $data["data"][] = array($category ,$row['prod_name'] ,$row['link'], $available , $row['prod_launch_date'],"<input type='button' data-id=".$row['id']." class='deleteCategory btn btn-danger' name='delete' value='delete'>","<input type='button' data-id=".$row['id']." class='editCategory btn btn-success' name='edit' data-toggle='modal' data-target='#myModal' value='edit'>","<input type='button' data-id=".$row['id']." class='enableCategory btn btn-success' name='enable' value='enable'>");
+                }
+            }
+        }
+        return $data;
+    }
     public function fetchAllProduct($conn) {
         $pid = 1;
         $data= array();
         $sql = "SELECT *  FROM tbl_product INNER JOIN tbl_product_description ON tbl_product.id = tbl_product_description.prod_id ";
         $result = $conn->query($sql);
-        return $result;
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()){
+                $id = $row['prod_parent_id'];
+                $desc = json_decode($row['description']);
+                //print_r($arr);
+                $sqlcat = "SELECT *  FROM tbl_product WHERE `prod_parent_id` ='1'  AND `id`='$id'";
+                $resultcat = $conn->query($sqlcat);
+                if ($resultcat->num_rows > 0) {
+                    while ($rowcat = $resultcat->fetch_assoc()) {
+                          $category = $rowcat['prod_name'];
+                    }
+                }
+                $data["data"][] = array($row['prod_name'], $category, $row['link'],$row['mon_price'],$row['annual_price'] ,$row['sku'],$row['prod_available'] ,$row['prod_launch_date'],$desc->webspace,$desc->bandwidth,$desc->free_domain,$desc->language,$desc->mailbox ,"<input type='button' data-id=".$row['prod_id']." class='deleteProduct btn btn-danger' name='deleteProduct' value='delete'>","<input type='button' data-id=".$row['prod_id']." class='editProduct btn btn-success' name='editProduct' data-toggle='modal' data-target='#editModal' value='edit'>");
+            }
+        }
+        return $data;
+    }
+    public function getSpecificCategory($id ,$conn) {
+        $category = "";
+        $sqlcat = "SELECT *  FROM tbl_product WHERE `prod_parent_id` ='1'  AND `id`='$id'";
+        $resultcat = $conn->query($sqlcat);
+        if ($resultcat->num_rows > 0) {
+            while ($rowcat = $resultcat->fetch_assoc()) {
+                $category = $rowcat['prod_name'];
+                echo $category;
+            }
+            return $category;
+        }
     }
     public function deleteCategory($id, $conn) 
     {
@@ -77,21 +130,62 @@ class Product {
         }
         return $ret;
     }
+    public function deleteProduct($id, $conn) {
+        $sqldesc = "DELETE FROM tbl_product_description WHERE`prod_id`='$id'";
+        if ( $conn->query($sqldesc) == TRUE )
+        {
+            $sql = "DELETE FROM tbl_product WHERE `id`='$id'";
+            if ( $conn->query($sql) == TRUE )
+            {
+                $ret = "Record deleted successfully"; 
+            } 
+        } 
+        else 
+        {
+            $ret = "Error deleting record: " . $conn->error;
+        }
+        return $ret;
+    }
     public function editCategory($id, $conn ) 
     {
         $sql = "SELECT *  FROM tbl_product WHERE `prod_parent_id` ='1' AND `id`='$id'";
 		$result = $conn->query($sql);
 		return $result;
     }
+    public function editProduct($id, $conn) {
+        $sql = "SELECT a.* , b.*  FROM tbl_product as a INNER JOIN tbl_product_description as b ON a.id = b.prod_id WHERE a.id= '$id'";
+        $result = $conn->query($sql);
+		return $result;
+    }
     public function saveCategory($id, $name, $link, $conn) {
         $sql = "UPDATE tbl_product SET `prod_name`='$name' ,`link`='$link'  WHERE `id` = '$id'";
 
 		if ($conn->query($sql) === TRUE) {
+            $sql = "UPDATE tbl_product SET `prod_name`='$name' ,`link`='$link'  WHERE `id` = '$id'";
 			$ret = "update successfully";
 		} else {
 			$ret = "Error updating record: " . $conn->error;
 		}
 		return $ret;
+    }
+    public function saveProduct($id,$name, $link,$mplan,$aplan,$sku,$web,$bandwidth,$domain, $language,$mailbox, $conn) {
+        $arr = array('webspace'=> $web,
+         'bandwidth'=>$bandwidth, 
+         'free_domain'=>$domain, 
+         'language'=>$language, 
+         'mailbox'=>$mailbox );
+        $desc = json_encode($arr);
+        $sql = "UPDATE tbl_product SET `prod_name`='$name' ,`link`='$link'  WHERE `id` = '$id'";
+		if ($conn->query($sql) === TRUE) {
+            $sqldesc = "UPDATE tbl_product_description SET `description`='$desc' ,`mon_price`='$mplan',`annual_price`='$aplan' ,`sku`='$sku'  WHERE `prod_id` = '$id'";
+            if ($conn->query($sqldesc) === TRUE) {
+                $ret = "update successfully";
+            }
+		} else {
+			$ret = "Error updating record: " . $conn->error;
+		}
+		return $ret;
+
     }
     public function enableCategory($id, $conn) {
         $available = 1;

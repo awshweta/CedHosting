@@ -280,7 +280,7 @@ include_once("sidebar.php"); ?>
                     <div class="text-muted text-center mt-2 mb-4"><small>Add Product</small></div>
                   </div>
                   <div class="card-body px-lg-5 py-lg-5">
-                    <form role="form" method="POST">
+                    <form id="formProductData" role="form" method="POST">
                         <div class="pb-5">
                             <h1 id="header_1" class="form-header" data-component="header">
                                 Create New Product
@@ -314,7 +314,10 @@ include_once("sidebar.php"); ?>
                             </label>
                             <div class="form-group">
                                 <div class="input-group input-group-merge input-group-alternative mb-3">
-                                <input class="name form-control"   placeholder="Name" name="name" type="text">
+                                <input class="name form-control" id="name"  placeholder="Name" name="name" type="text">
+                                <div class="invalid-feedback">
+                                    This is required field
+                                </div>
                                 </div>
                             </div>
                         </li>
@@ -325,6 +328,9 @@ include_once("sidebar.php"); ?>
                             <div class="form-group">
                                 <div class="input-group input-group-merge input-group-alternative mb-3">
                                 <input class="url form-control"   placeholder="url" name="url" type="url">
+                                <div class="invalid-feedback">
+                                  This is required field
+                                </div>
                                 </div>
                             </div>
                         </li>
@@ -344,6 +350,9 @@ include_once("sidebar.php"); ?>
                             <div class="error form-group">
                                 <div class="input-group input-group-merge input-group-alternative mb-3">
                                 <input class="mplan form-control"   placeholder="This would be Monthly Plan" name="name" type="text">
+                                <div class="invalid-feedback">
+                                This is required field
+                                </div>
                                 </div>
                             </div>
                         </li>
@@ -355,6 +364,9 @@ include_once("sidebar.php"); ?>
                             <div class="form-group">
                                 <div class="input-group input-group-merge input-group-alternative mb-3">
                                 <input class="aplan form-control"   placeholder="This would be Annual Price" name="name" type="text">
+                                <div class="invalid-feedback">
+                                This is required field
+                                </div>
                                 </div>
                             </div>
                         </li>
@@ -365,6 +377,9 @@ include_once("sidebar.php"); ?>
                             <div class="form-group">
                                 <div class="input-group input-group-merge input-group-alternative mb-3">
                                 <input class="sku form-control"   placeholder="Name" name="name" type="url">
+                                <div class="invalid-feedback">
+                                This is required field
+                                </div>
                                 </div>
                             </div>
                         </li>
@@ -381,6 +396,9 @@ include_once("sidebar.php"); ?>
                             <div class="form-group">
                                 <div class="input-group input-group-merge input-group-alternative mb-3">
                                 <input class="web form-control"   placeholder="Enter 0.5 for 512 MB" name="name" type="text">
+                                <div class="invalid-feedback">
+                                This is required field
+                                </div>
                                 </div>
                             </div>
                         </li>
@@ -392,6 +410,9 @@ include_once("sidebar.php"); ?>
                             <div class="form-group">
                                 <div class="input-group input-group-merge input-group-alternative mb-3">
                                 <input class="bandwidth form-control"   placeholder="Enter 0.5 for 512 MB" name="name" type="text">
+                                <div class="invalid-feedback">
+                                This is required field
+                                </div>
                                 </div>
                             </div>
                         </li>
@@ -402,6 +423,9 @@ include_once("sidebar.php"); ?>
                             <div class="form-group">
                                 <div class="input-group input-group-merge input-group-alternative mb-3">
                                 <input class="domain form-control"   placeholder="Enter 0 if no domain available in this service" name="name" type="url">
+                                <div class="invalid-feedback">
+                                This is required field
+                                </div>
                                 </div>
                             </div>
                         </li>
@@ -412,6 +436,9 @@ include_once("sidebar.php"); ?>
                             <div class="form-group">
                                 <div class="input-group input-group-merge input-group-alternative mb-3">
                                 <input class="language form-control"   placeholder="Separate by (,) Ex: PHP, MySQL, MongoDB" name="name" type="url">
+                                <div class="invalid-feedback">
+                                This is required field
+                                </div>
                                 </div>
                             </div>
                         </li>
@@ -422,11 +449,14 @@ include_once("sidebar.php"); ?>
                             <div class="form-group">
                                 <div class="input-group input-group-merge input-group-alternative mb-3">
                                 <input class="mailbox form-control"   placeholder="Enter Number of mailbox will be provided, enter 0 if none" name="name" type="url">
+                                <div class="invalid-feedback">
+                                This is required field
+                                </div>
                                 </div>
                             </div>
                         </li>
                       <div class="text-center">
-                        <button type="button" name="addProduct" class="addProduct btn btn-primary mt-4">Add Product</button>
+                        <button type="button" name="addProduct" class="addProduct btn btn-primary mt-4" disabled>Add Product</button>
                       </div>
                     </form>
                   </div>

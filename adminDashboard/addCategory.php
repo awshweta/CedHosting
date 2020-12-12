@@ -334,22 +334,21 @@ include_once("sidebar.php"); ?>
     </div>
 
     <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
+      <div class="modal-dialog">
       <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Edit Category</h4>
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Edit Category</h4>
+          </div>
+          <div class="modal-body">
+            <form id="form" role="form" method="POST">
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
         </div>
-        <div class="modal-body">
-          <form id="form" role="form" method="POST">
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
     </div>
   </div>
     <!-- Page contentif(isset($_SESSION['user'])) {
@@ -363,10 +362,11 @@ include_once("sidebar.php"); ?>
         <table class="display" style="width:100%">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Link</th>
-                    <th>Available</th>
-                    <th>Date</th>
+                    <th>Parent Category</th>
+                    <th>Category Name</th>
+                    <th>Category Link</th>
+                    <th>Category Available</th>
+                    <th>Category Date</th>
                     <th>Action</th>
                     <th></th>
                     <th></th>

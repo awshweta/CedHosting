@@ -276,18 +276,46 @@ include_once("sidebar.php"); ?>
         </div>
       </div>
     </div>
-    <div class="contain container-fluid mt--20">
+
+    <div class="modal fade" id="editModal" role="dialog">
+      <div class="modal-dialog">
+      <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Edit Product</h4>
+          </div>
+          <div class="modal-body">
+            <form id="formProduct" role="form" method="POST">
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+    </div>
+  </div>
+
+    <div class="container-fluid mt--20">
       <div class="row">
-        <div class="col-xl-9 col-lg-9">
+        <div class="col-xl-12 col-lg-12">
             <table class="productTable" style="width:100%">
                 <thead>
                     <tr>
-                        <th>Name</th>
+                        <th>Product Name</th>
+                        <th>Category Name</th>
                         <th>Link</th>
+                        <th>Month Price</th>
+                        <th>Annual Price</th>
+                        <th>Sku</th>
                         <th>Available</th>
                         <th>Date</th>
+                        <th>Webspace</th>
+                        <th>Bandwidth</th>
+                        <th>Free domain</th>
+                        <th>Language</th>
+                        <th>Mailbox</th>
                         <th>Action</th>
-                        <th></th>
                         <th></th>
                     </tr>
                 </thead>
