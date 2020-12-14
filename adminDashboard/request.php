@@ -61,22 +61,28 @@ include_once("../Product.php");
             $db = new DbCon();
             $product = new Product();
             $data = array();
+            $catdata = array();
             $arr = $product->editProduct($id, $db->conn);
+            $cat = $product->fetchCategory($db->conn);
             if ($arr->num_rows > 0) {
-                while ($row = $arr->fetch_assoc()){
-                    $data[] = $row;
+                while ($rowdata = $arr->fetch_assoc()){
+                    $data[] = $rowdata;
                 }
-                $prod_data = $data[0];
-                $prod_data['description'] = json_decode($prod_data['description']);
             }
-           // echo "<pre>";
-           // echo $prod_data['description'];
-          //  print_r($prod_data);
-          echo json_encode($prod_data);
+            if ($cat->num_rows > 0) {
+                while ($row = $cat->fetch_assoc()){
+                    $catdata[] = $row;
+                }
+            }
+            $prod_data = $data[0];
+            $prod_data['description'] = json_decode($prod_data['description']);
+            $alldata = array('product'=>$prod_data, 'category'=>$catdata);
+            echo json_encode($alldata);
         }
         if ($_POST['action'] == "saveProduct") {
             $id = $_POST['id'];
             $name = isset($_POST["name"]) ? trim($_POST["name"]) :"";
+            $category = isset($_POST["category"]) ? trim($_POST["category"]) :"";
             $link = isset($_POST['link']) ? $_POST['link'] :"";
             $mplan =isset($_POST['mplan']) ? $_POST['mplan'] :"";
             $aplan =isset($_POST['aplan']) ? $_POST['aplan'] :"";
@@ -89,7 +95,7 @@ include_once("../Product.php");
             $db = new DbCon();
             $product = new Product();
             $data = array();
-            $arr = $product->saveProduct($id,$name, $link,$mplan,$aplan,$sku,$web,$bandwidth,$domain, $language,$mailbox, $db->conn);
+            $arr = $product->saveProduct($id,$name,$category, $link,$mplan,$aplan,$sku,$web,$bandwidth,$domain, $language,$mailbox, $db->conn);
             echo json_encode($arr);
         }
         if ($_POST['action'] == "saveCategory") {

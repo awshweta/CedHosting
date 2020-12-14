@@ -296,7 +296,7 @@ include_once("sidebar.php"); ?>
                             </label>
                             <div class="input-group mb-3">
                                 <select class="category custom-select" id="inputGroupSelect01">
-                                    <option selected disabled>Choose...</option>
+                                    <option value="" selected>Choose...</option>
                                     <?php
                                       if ($result->num_rows > 0) {
                                         while ($row=$result->fetch_assoc()) {?>
@@ -305,6 +305,9 @@ include_once("sidebar.php"); ?>
                                       }
                                       ?>
                                 </select>
+                                <div class="invalid-feedback">
+                                    This is required field
+                                </div>
                             </div>
                         </li>
                         <li class="form-line" data-type="control_dropdown" id="id_3">
@@ -319,6 +322,7 @@ include_once("sidebar.php"); ?>
                                     This is required field
                                 </div>
                                 </div>
+                                <small class="nameErr"></small>
                             </div>
                         </li>
                         <li class="form-line" data-type="control_dropdown" id="id_3">
@@ -354,6 +358,7 @@ include_once("sidebar.php"); ?>
                                 This is required field
                                 </div>
                                 </div>
+                                <small class="mpriceErr"></small>
                             </div>
                         </li>
                         <li class="form-line" data-type="control_dropdown" id="id_3">
@@ -368,6 +373,7 @@ include_once("sidebar.php"); ?>
                                 This is required field
                                 </div>
                                 </div>
+                                <small class="apriceErr"></small>
                             </div>
                         </li>
                         <li class="form-line" data-type="control_dropdown" id="id_3">
@@ -381,6 +387,7 @@ include_once("sidebar.php"); ?>
                                 This is required field
                                 </div>
                                 </div>
+                                <small class="skuErr"></small>
                             </div>
                         </li>
                         <div class="pb-5">
@@ -400,6 +407,7 @@ include_once("sidebar.php"); ?>
                                 This is required field
                                 </div>
                                 </div>
+                                <small class="webErr"></small>
                             </div>
                         </li>
                         <li class="form-line" data-type="control_dropdown" id="id_3">
@@ -414,6 +422,7 @@ include_once("sidebar.php"); ?>
                                 This is required field
                                 </div>
                                 </div>
+                                <small class="bandwidthErr"></small>
                             </div>
                         </li>
                         <li class="form-line" data-type="control_dropdown" id="id_3">
@@ -427,6 +436,7 @@ include_once("sidebar.php"); ?>
                                 This is required field
                                 </div>
                                 </div>
+                                <small class="domainErr"></small>
                             </div>
                         </li>
                         <li class="form-line" data-type="control_dropdown" id="id_3">
@@ -440,6 +450,7 @@ include_once("sidebar.php"); ?>
                                 This is required field
                                 </div>
                                 </div>
+                                <small class="languageErr"></small>
                             </div>
                         </li>
                         <li class="form-line" data-type="control_dropdown" id="id_3">
@@ -453,6 +464,7 @@ include_once("sidebar.php"); ?>
                                 This is required field
                                 </div>
                                 </div>
+                                <small class="mailboxErr"></small>
                             </div>
                         </li>
                       <div class="text-center">

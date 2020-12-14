@@ -326,7 +326,7 @@ include_once("sidebar.php"); ?>
     <!-- Page contentif(isset($_SESSION['user'])) {
 	if($_SESSION['user']['role']==1) { -->
       <!-- Footer -->
-    <script src="admin.js"></script>
+      <script src="editValidation.js"></script>
 <?php include "footer.php";
     } 
 }

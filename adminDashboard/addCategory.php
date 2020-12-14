@@ -279,13 +279,17 @@ include_once("sidebar.php"); ?>
                     <div class="text-muted text-center mt-2 mb-4"><small>Add Category</small></div>
                   </div>
                   <div class="card-body px-lg-5 py-lg-5">
-                    <form role="form" method="POST">
+                    <form id="formCat" role="form" method="POST">
                       <div class="form-group">
                         <div class="input-group input-group-merge input-group-alternative mb-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
                           </div>
-                          <input class="name form-control"   placeholder="Name" name="name" type="text">
+                          <input class="name form-control" id="name"  placeholder="Name" name="name" type="text">
+                          <div class="invalid-feedback">
+                              This is required field
+                          </div>
+                          <small class="nameErr"></small>
                         </div>
                       </div>
                       <div class="form-group">
@@ -321,7 +325,7 @@ include_once("sidebar.php"); ?>
                         </div>
                       </div>
                       <div class="text-center">
-                        <button type="button" name="addCategory" class="addCategory btn btn-primary mt-4">Create Category</button>
+                        <button type="button" name="addCategory" class="addCategory btn btn-primary mt-4" disabled>Create Category</button>
                       </div>
                     </form>
                   </div>

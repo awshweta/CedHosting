@@ -11,7 +11,7 @@ class Product {
     public function addCategory($name , $link ,$conn) {
         $prod_parent_id =1;
         $prod_available =1;
-        $sql = "INSERT INTO tbl_product(`prod_parent_id`, `prod_name` , `link`, `prod_available`) VALUES ('".$prod_parent_id."','".$name."', '".$link."','".$prod_available."')";
+        $sql = "INSERT INTO tbl_product(`prod_parent_id`, `prod_name` , `html`, `prod_available`) VALUES ('".$prod_parent_id."','".$name."', '".$link."','".$prod_available."')";
         if ($conn->query($sql) === true) {
             $ret = "Category added successfully";
         } else {
@@ -29,14 +29,14 @@ class Product {
         $pid = 1;
         $prod_available =1;
         $ret = "";
-        $sql = "SELECT *  FROM tbl_product WHERE `prod_parent_id` ='$pid'  AND `id` NOT IN (SELECT MIN(`id`) FROM tbl_product)";
+        $sql = "SELECT *  FROM tbl_product WHERE `prod_parent_id` ='$pid'";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 if ($row['prod_name'] == $category) {
                     $catId = $row['id'];
                     //echo $catId;
-                    $sql = "INSERT INTO tbl_product(`prod_parent_id`, `prod_name` , `link`, `prod_available`) VALUES ('".$catId."','".$name."', '".$link."','".$prod_available."')";
+                    $sql = "INSERT INTO tbl_product(`prod_parent_id`, `prod_name` , `html`, `prod_available`) VALUES ('".$catId."','".$name."', '".$link."','".$prod_available."')";
                     if ($conn->query($sql) === true) {
                         $last_id = $conn->insert_id;
                         $sqldesc ="INSERT INTO tbl_product_description (`prod_id`,`description`,`mon_price`,`annual_price`,`sku`) VALUES ('$last_id','$desc','$mplan','$aplan','$sku')";
@@ -73,11 +73,11 @@ class Product {
                 }
                 if($row['prod_available'] == 1) {
                     $available ="enable";
-                    $data["data"][] = array($category ,$row['prod_name'] ,$row['link'], $available , $row['prod_launch_date'],"<input type='button' data-id=".$row['id']." class='deleteCategory btn btn-danger' name='delete' value='delete'>","<input type='button' data-id=".$row['id']." class='editCategory btn btn-success' name='edit' data-toggle='modal' data-target='#myModal' value='edit'>","<input type='button' data-id=".$row['id']." class='disableCategory btn btn-danger' name='desable' value='disable'>");
+                    $data["data"][] = array($category ,$row['prod_name'] ,$row['html'], $available , $row['prod_launch_date'],"<input type='button' data-id=".$row['id']." class='deleteCategory btn btn-danger' name='delete' value='delete'>","<input type='button' data-id=".$row['id']." class='editCategory btn btn-success' name='edit' data-toggle='modal' data-target='#myModal' value='edit'>","<input type='button' data-id=".$row['id']." class='disableCategory btn btn-danger' name='desable' value='disable'>");
                 }
                 else {
                     $available ="disable";
-                    $data["data"][] = array($category ,$row['prod_name'] ,$row['link'], $available , $row['prod_launch_date'],"<input type='button' data-id=".$row['id']." class='deleteCategory btn btn-danger' name='delete' value='delete'>","<input type='button' data-id=".$row['id']." class='editCategory btn btn-success' name='edit' data-toggle='modal' data-target='#myModal' value='edit'>","<input type='button' data-id=".$row['id']." class='enableCategory btn btn-success' name='enable' value='enable'>");
+                    $data["data"][] = array($category ,$row['prod_name'] ,$row['html'], $available , $row['prod_launch_date'],"<input type='button' data-id=".$row['id']." class='deleteCategory btn btn-danger' name='delete' value='delete'>","<input type='button' data-id=".$row['id']." class='editCategory btn btn-success' name='edit' data-toggle='modal' data-target='#myModal' value='edit'>","<input type='button' data-id=".$row['id']." class='enableCategory btn btn-success' name='enable' value='enable'>");
                 }
             }
         }
@@ -100,7 +100,7 @@ class Product {
                           $category = $rowcat['prod_name'];
                     }
                 }
-                $data["data"][] = array($row['prod_name'], $category, $row['link'],$row['mon_price'],$row['annual_price'] ,$row['sku'],$row['prod_available'] ,$row['prod_launch_date'],$desc->webspace,$desc->bandwidth,$desc->free_domain,$desc->language,$desc->mailbox ,"<input type='button' data-id=".$row['prod_id']." class='deleteProduct btn btn-danger' name='deleteProduct' value='delete'>","<input type='button' data-id=".$row['prod_id']." class='editProduct btn btn-success' name='editProduct' data-toggle='modal' data-target='#editModal' value='edit'>");
+                $data["data"][] = array($row['prod_name'], $category, $row['html'],$row['mon_price'],$row['annual_price'] ,$row['sku'],$row['prod_available'] ,$row['prod_launch_date'],$desc->webspace,$desc->bandwidth,$desc->free_domain,$desc->language,$desc->mailbox ,"<input type='button' data-id=".$row['prod_id']." class='deleteProduct btn btn-danger' name='deleteProduct' value='delete'>","<input type='button' data-id=".$row['prod_id']." class='editProduct btn btn-success' name='editProduct' data-toggle='modal' data-target='#editModal' value='edit'>");
             }
         }
         return $data;
@@ -112,7 +112,7 @@ class Product {
         if ($resultcat->num_rows > 0) {
             while ($rowcat = $resultcat->fetch_assoc()) {
                 $category = $rowcat['prod_name'];
-                echo $category;
+                //echo $category;
             }
             return $category;
         }
@@ -158,34 +158,42 @@ class Product {
 		return $result;
     }
     public function saveCategory($id, $name, $link, $conn) {
-        $sql = "UPDATE tbl_product SET `prod_name`='$name' ,`link`='$link'  WHERE `id` = '$id'";
+        $sql = "UPDATE tbl_product SET `prod_name`='$name' ,`html`='$link'  WHERE `id` = '$id'";
 
 		if ($conn->query($sql) === TRUE) {
-            $sql = "UPDATE tbl_product SET `prod_name`='$name' ,`link`='$link'  WHERE `id` = '$id'";
 			$ret = "update successfully";
 		} else {
 			$ret = "Error updating record: " . $conn->error;
 		}
 		return $ret;
     }
-    public function saveProduct($id,$name, $link,$mplan,$aplan,$sku,$web,$bandwidth,$domain, $language,$mailbox, $conn) {
+    public function saveProduct($id,$name,$category, $link,$mplan,$aplan,$sku,$web,$bandwidth,$domain, $language,$mailbox, $conn) {
         $arr = array('webspace'=> $web,
          'bandwidth'=>$bandwidth, 
          'free_domain'=>$domain, 
          'language'=>$language, 
          'mailbox'=>$mailbox );
+        $ret ="";
         $desc = json_encode($arr);
-        $sql = "UPDATE tbl_product SET `prod_name`='$name' ,`link`='$link'  WHERE `id` = '$id'";
-		if ($conn->query($sql) === TRUE) {
-            $sqldesc = "UPDATE tbl_product_description SET `description`='$desc' ,`mon_price`='$mplan',`annual_price`='$aplan' ,`sku`='$sku'  WHERE `prod_id` = '$id'";
-            if ($conn->query($sqldesc) === TRUE) {
-                $ret = "update successfully";
+        $sqlcat = "SELECT *  FROM tbl_product WHERE `prod_parent_id` ='1'";
+        $resultcat = $conn->query($sqlcat);
+        if ($resultcat->num_rows > 0) {
+            while ($rowcat = $resultcat->fetch_assoc()) {
+                if ($rowcat['prod_name'] == $category) {
+                    $catId = $rowcat['id'];
+                    $sql = "UPDATE tbl_product SET `prod_parent_id`='$catId' ,`prod_name`='$name' ,`html`='$link'  WHERE `id` = '$id'";
+                    if ($conn->query($sql) === TRUE) {
+                        $sqldesc = "UPDATE tbl_product_description SET `description`='$desc' ,`mon_price`='$mplan',`annual_price`='$aplan' ,`sku`='$sku'  WHERE `prod_id` = '$id'";
+                        if ($conn->query($sqldesc) === TRUE) {
+                            $ret = "update successfully";
+                        }
+                    } else {
+                        $ret = "Error updating record: " . $conn->error;
+                    }
+                    return $ret;
+                }
             }
-		} else {
-			$ret = "Error updating record: " . $conn->error;
-		}
-		return $ret;
-
+        }
     }
     public function enableCategory($id, $conn) {
         $available = 1;
