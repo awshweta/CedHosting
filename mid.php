@@ -18,7 +18,7 @@ $result =$product->fetchCategory($db->conn);
 							<i class="icon-bar"></i>
 						</button>				  
 						<div class="navbar-brand">
-						<h1><img src="logo.png"><a href="index.html"></a></h1>
+						<h1><img src="logo.png"><a></a></h1>
 						</div>
 					</div>
 					<?php
@@ -38,7 +38,7 @@ $result =$product->fetchCategory($db->conn);
 									<?php
 										if ($result->num_rows > 0) {
 										while ($row=$result->fetch_assoc()) {?>
-											<li><a><?php echo $row['prod_name']; ?></a></li>
+											<li><a href="catpage.php?id=<?php echo $row['id']; ?>"><?php echo $row['prod_name']; ?></a></li>
 										<?php }
 									}
 									?>
@@ -48,7 +48,12 @@ $result =$product->fetchCategory($db->conn);
 							<li <?php if($filename == 'pricing.php') { ?> class="active"<?php }  ?>><a href="pricing.php">Pricing</a></li>
 							<li <?php if($filename == 'contact.php') { ?> class="active"<?php }  ?>><a href="contact.php">Contact</a></li>
 							<li ><a><i class="fas fa-shopping-cart"></i></a></li>
-							<li <?php if($filename == 'login.php') { ?> class="active"<?php }  ?> ><a href="login.php">Login</a></li>
+							<?php if(isset($_SESSION['user'])) { ?>
+								<li <?php if($filename == 'logout.php') { ?> class="active"<?php }  ?> ><a href="logout.php">Logout</a></li>
+							<?php } 
+							else { ?>
+								<li <?php if($filename == 'login.php') { ?> class="active"<?php }  ?> ><a href="login.php">Login</a></li>
+							<?php } ?>
 							<!--<li><a href="logout.php">Logout</a></li>-->
 						</ul>	  
 					</div><!-- /.navbar-collapse -->

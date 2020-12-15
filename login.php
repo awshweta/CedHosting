@@ -57,7 +57,7 @@
 								<div class="col-md-6 login-right">
 									<h3>registered</h3>
 									<p>If you have an account with us, please log in.</p>
-									<form method="POST">
+									<form id="loginform" method="POST">
 									  <div>
 										<span>Email Address<label>*</label></span>
 										<input type="email" name="email" required> 

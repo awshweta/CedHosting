@@ -31,7 +31,7 @@ class User {
 			}
 			return $ret;
 	}else {
-		$ret = 'Email already exist';
+		$ret = 'Email or number already exist';
 		return $ret;
 	}
 	$conn->close();

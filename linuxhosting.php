@@ -1,4 +1,14 @@
-<?php include("header.php"); ?>
+<?php 
+if(isset($_GET['id'])) {
+	include_once("Product.php");
+	include_once("Dbcon.php");
+	$product = new Product();
+	$db = new Dbcon();
+	$result = $product->fetchCategory($db->conn);
+	if ($result->num_rows > 0) {
+		while ($row = $result->fetch_assoc()) {
+			if($row['id'] == $_GET['id']) {
+include("header.php"); ?>
 		<!---singleblog--->
 		<!--script-->
 	<link rel="stylesheet" href="css/swipebox.css">
@@ -290,3 +300,10 @@
 
 				</div>
 <?php include("footer.php"); ?>
+<?php 
+
+}
+}
+}
+}
+?>

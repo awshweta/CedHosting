@@ -331,7 +331,7 @@ include_once("sidebar.php"); ?>
                             </label>
                             <div class="form-group">
                                 <div class="input-group input-group-merge input-group-alternative mb-3">
-                                <input class="url form-control"   placeholder="url" name="url" type="url">
+                                <input class="url form-control"   placeholder="url" name="url" type="text">
                                 <div class="invalid-feedback">
                                   This is required field
                                 </div>

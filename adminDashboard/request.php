@@ -6,6 +6,7 @@ include_once("../Product.php");
         if ($_POST['action'] == "addCategory") {
             $name = isset($_POST["name"]) ? trim($_POST["name"]) :"";
             $link = isset($_POST['link']) ? $_POST['link'] :"";
+            $link = json_encode($link);
             $db = new Dbcon();
             $product = new Product();
             $result=$product->addCategory($name, $link, $db->conn);
@@ -129,7 +130,6 @@ include_once("../Product.php");
         $db = new DbCon();
         $product = new Product();
         $data = array();
-        $available ="";
         $arr = $product->fetchAllCategory($db->conn);
         echo json_encode($arr);
     }

@@ -285,11 +285,11 @@ include_once("sidebar.php"); ?>
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
                           </div>
-                          <input class="name form-control" id="name"  placeholder="Name" name="name" type="text">
+                          <input class="name cat form-control" id="name"  placeholder="Name" name="name" type="text">
                           <div class="invalid-feedback">
                               This is required field
                           </div>
-                          <small class="nameErr"></small>
+                          <small class="namecatErr"></small>
                         </div>
                       </div>
                       <div class="form-group">
@@ -297,7 +297,7 @@ include_once("sidebar.php"); ?>
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                           </div>
-                          <input class="link form-control" placeholder="link" name="link" type="url">
+                          <input class="link form-control" placeholder="link" name="link" type="text">
                         </div>
                       </div>
                       <div class="form-group">

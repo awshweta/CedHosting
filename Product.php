@@ -72,11 +72,11 @@ class Product {
                     }
                 }
                 if($row['prod_available'] == 1) {
-                    $available ="enable";
+                    $available ="available";
                     $data["data"][] = array($category ,$row['prod_name'] ,$row['html'], $available , $row['prod_launch_date'],"<input type='button' data-id=".$row['id']." class='deleteCategory btn btn-danger' name='delete' value='delete'>","<input type='button' data-id=".$row['id']." class='editCategory btn btn-success' name='edit' data-toggle='modal' data-target='#myModal' value='edit'>","<input type='button' data-id=".$row['id']." class='disableCategory btn btn-danger' name='desable' value='disable'>");
                 }
                 else {
-                    $available ="disable";
+                    $available ="unavailable";
                     $data["data"][] = array($category ,$row['prod_name'] ,$row['html'], $available , $row['prod_launch_date'],"<input type='button' data-id=".$row['id']." class='deleteCategory btn btn-danger' name='delete' value='delete'>","<input type='button' data-id=".$row['id']." class='editCategory btn btn-success' name='edit' data-toggle='modal' data-target='#myModal' value='edit'>","<input type='button' data-id=".$row['id']." class='enableCategory btn btn-success' name='enable' value='enable'>");
                 }
             }
@@ -105,17 +105,15 @@ class Product {
         }
         return $data;
     }
-    public function getSpecificCategory($id ,$conn) {
-        $category = "";
-        $sqlcat = "SELECT *  FROM tbl_product WHERE `prod_parent_id` ='1'  AND `id`='$id'";
+    public function fetchAvailableProduct($id, $conn) {
+        $sql="SELECT *  FROM tbl_product INNER JOIN tbl_product_description ON tbl_product.id = tbl_product_description.prod_id WHERE tbl_product.`prod_available`='1' AND tbl_product.`prod_parent_id`='$id'";
+        $result = $conn->query($sql);
+        return $result;
+    }
+    public function fetchSpecificCategory($id, $conn) {
+        $sqlcat = "SELECT *  FROM tbl_product WHERE `prod_available`='1'  AND `id`='$id'";
         $resultcat = $conn->query($sqlcat);
-        if ($resultcat->num_rows > 0) {
-            while ($rowcat = $resultcat->fetch_assoc()) {
-                $category = $rowcat['prod_name'];
-                //echo $category;
-            }
-            return $category;
-        }
+        return $resultcat;
     }
     public function deleteCategory($id, $conn) 
     {

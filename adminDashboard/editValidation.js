@@ -19,17 +19,17 @@ $('.productTable').on("click" ,'.deleteProduct',function() {
 
 $('#formProduct').on("click" ,'.saveProduct',function() {
     var id= $(this).data('id');
-    var name = $(".name").val();
-    var category = $(".category").val();
-    var link = $('.url').val();
-    var mplan = $('.mplan').val();
-    var aplan = $('.aplan').val();
-    var sku = $('.sku').val();
-    var web = $('.web').val();
-    var bandwidth = $('.bandwidth').val();
-    var domain = $('.domain').val();
-    var language = $('.language').val();
-    var mailbox = $('.mailbox').val();
+    var name = $(".name").val().trim();
+    var category = $(".category").val().trim();
+    var link = $('.url').val().trim();
+    var mplan = $('.mplan').val().trim();
+    var aplan = $('.aplan').val().trim();
+    var sku = $('.sku').val().trim();
+    var web = $('.web').val().trim();
+    var bandwidth = $('.bandwidth').val().trim();
+    var domain = $('.domain').val().trim();
+    var language = $('.language').val().trim();
+    var mailbox = $('.mailbox').val().trim();
     $.ajax({
         type: "POST",
         url: "request.php",
@@ -108,7 +108,7 @@ $('.productTable').on("click" ,'.editProduct',function() {
                         '<label class="form-label form-label-top form-label-auto" id="label_3" for="input_3">Page Url</label>'+
                         '<div class="form-group">'+
                             '<div class="input-group input-group-merge input-group-alternative mb-3">'+
-                            '<input class="url form-control" value="'+msg['product']['html']+'"   placeholder="url" name="url" type="url">'+
+                            '<input class="url form-control" value="'+msg['product']['html']+'"   placeholder="url" name="url" type="text">'+
                             '</div>'+
                         '</div>'+
                     '</li>'+

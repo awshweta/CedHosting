@@ -304,17 +304,17 @@ include_once("sidebar.php"); ?>
                     <tr>
                         <th>Product Name</th>
                         <th>Category Name</th>
-                        <th>Link</th>
-                        <th>Month Price</th>
-                        <th>Annual Price</th>
-                        <th>Sku</th>
-                        <th>Available</th>
-                        <th>Date</th>
-                        <th>Webspace</th>
-                        <th>Bandwidth</th>
-                        <th>Free domain</th>
-                        <th>Language</th>
-                        <th>Mailbox</th>
+                        <th>Product Link</th>
+                        <th>Product Month Price</th>
+                        <th>Product Annual Price</th>
+                        <th>Product Sku</th>
+                        <th>Product Available</th>
+                        <th>Product Date</th>
+                        <th>Product Webspace</th>
+                        <th>Product Bandwidth</th>
+                        <th>Product Free domain</th>
+                        <th>Product Language</th>
+                        <th>Product Mailbox</th>
                         <th>Action</th>
                         <th></th>
                     </tr>
