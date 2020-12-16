@@ -144,20 +144,30 @@ function validation() {
     var domain = $('.domain').val();
     var language = $('.language').val();
     var mailbox = $('.mailbox').val();
+    if(aplan == "") {
+        $('.mpriceErr').html("");
+    }
+    else {
+        if(parseInt(aplan) > parseInt(mplan)) {
+            $('.mpriceErr').html("");
+        }
+        else {
+            $('.mpriceErr').html("Monthly price can not be greater than annual price.").css("color","red");
+        }
+    }
     if(name != "" && category !="" && mplan !="" && aplan !="" && sku!="" && web!="" && bandwidth!="" && domain !="" && language !="" && mailbox !="") {
         $(".addProduct").prop( "disabled", false );
     }
 }
 $(document).ready(function() {
     $('#form').on("focusout",".cat",function() {
-        debugger;
         var name = $(this).val();
         if(name != "") {
-            //var letters = /^([a-zA-Z]+)([a-zA-Z0-9\-])+$/;
-            var letters = /(^([a-zA-Z]+[a-zA-Z0-9]+\s?)+$)/;
-            var nameVal = /^([a-zA-Z]+[0-9]+\.[0-9]+$)/;
+             var letters=/^([a-zA-Z]+\s?)([0-9]+\.?)$/;
+            //var letters = /(^([a-zA-Z]+[a-zA-Z0-9]+\s?)+$)/;
+            //var nameVal = /^([a-zA-Z]+[0-9]+\.[0-9]+$)/;
             //var letters = /(^([a-zA-Z]+[a-zA-Z0-9]+\s?)+$)|(^([a-zA-Z]+[0-9]+\.[0-9]+$))/;
-            if(name.match(letters) || name.match(nameVal)) {
+            if(name.match(letters)) {
                 $(".saveCategory").prop( "disabled", false );
                 $(".cat").removeClass('is-invalid');
                 $('.nameErr').html("");
@@ -174,9 +184,10 @@ $(document).ready(function() {
         }
     });
     $('#formCat').on("focusout",".cat",function() {
-        //debugger;
+        debugger;
         var name = $(this).val();
         if(name != "") {
+            //var letters=/^([a-zA-Z]+\s?)([0-9]+\.?)$/;
             //var letters = /^([a-zA-Z]+)([a-zA-Z0-9\-])+$/;
             var letters = /(^([a-zA-Z]+[a-zA-Z0-9]+\s?)+$)/;
             var nameVal = /^([a-zA-Z]+[0-9]+\.[0-9]+$)/;
@@ -233,6 +244,7 @@ $(document).ready(function() {
     });
     $(".mplan").focusout(function(event) {
         var val = $(this).val();
+        var aplan = $('.aplan').val();
         if(val != "") {
             var letters = (/^([0-9]+\.[0-9]+$)|(^([0-9])+$)/);
             if(val.match(letters)) {
@@ -248,7 +260,7 @@ $(document).ready(function() {
             }
             else {
                 $(".addProduct").attr('disabled', 'disabled');
-                $('.mpriceErr').html("only numeric and . are allowed").css("color","red");
+                $('.mpriceErr').html("only numeric and single single . are allowed").css("color","red");
             }
         }
         else {
@@ -273,7 +285,7 @@ $(document).ready(function() {
             }
             else {
                 $(".addProduct").attr('disabled', 'disabled');
-                $('.apriceErr').html("Only numeric and . are allowed").css("color","red");
+                $('.apriceErr').html("Only numeric and single . are allowed").css("color","red");
             }
         }
         else {
@@ -316,7 +328,7 @@ $(document).ready(function() {
             }
             else {
                 $(".addProduct").attr('disabled', 'disabled');
-                $('.webErr').html("Only numeric and . are allowed").css("color","red");
+                $('.webErr').html("Only numeric and single . are allowed").css("color","red");
             }
         }
         else {
@@ -341,7 +353,7 @@ $(document).ready(function() {
             }
             else {
                 $(".addProduct").attr('disabled', 'disabled');
-                $('.bandwidthErr').html("Only numeric and . are allowed").css("color","red");
+                $('.bandwidthErr').html("Only numeric and single . are allowed").css("color","red");
             }
         }
         else {
@@ -371,8 +383,10 @@ $(document).ready(function() {
     $(".language").focusout(function(event) {
         var val = $(this).val();
         if(val != "") {
+            var letters = /(^((?![0-9]+$)[a-zA-Z0-9]+\,?\s?)+$)/;
+            //var letters = /(^([a-zA-Z]+[a-zA-Z0-9]+\,[a-zA-Z]+[a-zA-Z0-9+\s?]+)*$)|(^([a-zA-Z]+[a-zA-Z0-9]+\,+\s?[a-zA-Z+\s?]+[a-zA-Z0-9]+)*$)|(^([a-zA-Z]+\s?)*$)|(^([a-zA-Z]+[a-zA-Z0-9]+\s?)*$)/;
             //var letters = /(^([a-zA-Z]+\s?)|([a-zA-Z]+\-[0-9]+$))|(^([a-zA-Z])+$)/;
-            var letters = /(^([a-zA-Z]+[0-9]+\,[a-zA-Z]+[0-9]+$))|(^([a-zA-Z]+[0-9]+\,[a-zA-Z]+$))|(^([a-zA-Z]+\,[a-zA-Z]+[0-9]+$))|(^([a-zA-Z]+\,[a-zA-Z]+$))|(^([a-zA-Z])+$)/;
+           // var letters = /(^([a-zA-Z]+[0-9]+\,[a-zA-Z]+[0-9]+$))|(^([a-zA-Z]+[0-9]+\,[a-zA-Z]+$))|(^([a-zA-Z]+\,[a-zA-Z]+[0-9]+$))|(^([a-zA-Z]+\,[a-zA-Z]+$))|(^([a-zA-Z])+$)/;
             if(val.match(letters)) {
                 validation();
                 $(".language").removeClass('is-invalid');

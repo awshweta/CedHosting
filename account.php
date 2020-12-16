@@ -19,7 +19,7 @@ if(isset($_POST['submit'])) {
     $rePass = isset($_POST['rePass']) ? $_POST['rePass'] : "";
     $db = new Dbcon();
     $user = new User();
-    $pattern = "/^([a-zA-Z]+[0-9])+([a-zA-Z0-9\.?-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\.?_-]+)+$/";
+    //$pattern = "/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$^/";
     //echo strlen($mobile);
     $mobileval="";
     $split = str_split($mobile, 1);
@@ -75,7 +75,8 @@ if(isset($_POST['submit'])) {
             $r = true;
         }
     }
-    if (!preg_match ($pattern, $email) ) {  
+    $pattern = "/^[a-zA-Z0-9-]+\.?+@[a-zA-Z0-9]+\.[a-zA-Z]{2,4}$/";
+    if (!preg_match ($pattern, $email) ) { 
         $emailErr = "Please follow name@example.com format";
         $r = true;
     }  
@@ -83,7 +84,7 @@ if(isset($_POST['submit'])) {
         $nameErr ="please enter alphabet character only and more than one space are not allow between word";
         $r = true;
     }
-    $letters = "/(^([a-zA-Z]+[a-zA-Z0-9]+)$)|(^([a-zA-Z])+$)/";
+    $letters = "/(^([a-zA-Z]+[a-zA-Z0-9]+\s?)*$)|(^([a-zA-Z]+\s?)*$)/";
     if(!preg_match($letters, $ans)) { 
         $ansErr ="please enter alphabet/alphanumeric character only";
         $r = true;
@@ -102,7 +103,6 @@ if(isset($_POST['submit'])) {
             echo '<script>alert("'.$ret.'");</script>';
         }
     }
-
 }
 ?>
 <link rel="stylesheet" href="css/swipebox.css">
@@ -132,7 +132,7 @@ if(isset($_POST['submit'])) {
                         </div>
                         <div>
                             <span>Email Address<label>*</label></span>
-                            <input type="email" name="email" class="email" required>
+                            <input type="email" name="email" class="email"  required>
                             <p><small class="error  text-danger"><?php echo $emailErr; ?></small></p>
                         </div>
                         <div>

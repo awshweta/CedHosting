@@ -9,7 +9,7 @@ if(isset($_SESSION['user'])) {
     $getCategory = $product->getCategory($db->conn); 
     $result =$product->fetchCategory($db->conn);
     ?>
-<?php include_once('header.php'); 
+<?php include_once('header.php');
 include_once("sidebar.php"); ?>
   </div>
       </div>
@@ -327,15 +327,10 @@ include_once("sidebar.php"); ?>
                         </li>
                         <li class="form-line" data-type="control_dropdown" id="id_3">
                             <label class="form-label form-label-top form-label-auto" id="label_3" for="input_3">
-                            Page Url
+                            Html Code
                             </label>
                             <div class="form-group">
-                                <div class="input-group input-group-merge input-group-alternative mb-3">
-                                <input class="url form-control"   placeholder="url" name="url" type="text">
-                                <div class="invalid-feedback">
-                                  This is required field
-                                </div>
-                                </div>
+                              <textarea class="url form-control" id="editor"></textarea>
                             </div>
                         </li>
                         <div class="pb-5">

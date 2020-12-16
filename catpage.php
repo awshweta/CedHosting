@@ -5,7 +5,11 @@ if(isset($_GET['id'])) {
     $db = new Dbcon();
     $product = new Product();
     $id = $_GET['id'];
+    $r = false;
     $ret = $product->fetchSpecificCategory($id, $db->conn);
+    if ($ret->num_rows == 0) {
+        header('location:index.php');
+    }
     $prod = $product->fetchAvailableProduct($id, $db->conn); 
     include("header.php");
 ?>
@@ -48,60 +52,37 @@ if(isset($_GET['id'])) {
                             <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
                                 <ul id="myTab" class="nav nav-tabs left-tab" role="tablist">
                                     <li role="presentation" class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">IN Hosting</a></li>
-                                    <li role="presentation"><a href="#profile" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile">US Hosting</a></li>
                                 </ul>
                                 <div id="myTabContent" class="tab-content">
                                     <div role="tabpanel" class="tab-pane fade in active" id="home" aria-labelledby="home-tab">
-                                   <?php if ($prod->num_rows > 0) {
-                                            while ($row = $prod->fetch_assoc()) { 
-                                                $desc=json_decode($row['description']); 
-                                                print_r($desc); ?>
-                                                
-                                                <div class="linux-prices">
-                                                    <div class="col-md-3 linux-price">
+                                        <div class="linux-prices">
+                                                <?php if ($prod->num_rows > 0) {
+                                                    while ($row = $prod->fetch_assoc()) { 
+                                                        $desc=json_decode($row['description']); 
+                                                    ?>
+                                                     <div class="col-md-3 linux-price">
                                                         <div class="linux-top">
-                                                        <h4><?php echo $row['prod_name']; ?></h4>
+                                                            <h4><?php echo $row['prod_name']; ?></h4>
                                                         </div>
                                                         <div class="linux-bottom">
-                                                            <h5><?php echo $desc->webspace; ?><span class="month">per month</span></h5>
-                                                            <h5><?php $row['annual_price']; ?><span class="month">per year</span></h5>
+                                                            <h5><?php echo $row['mon_price']; ?><span class="month">per month</span></h5>
+                                                            <h5><?php echo $row['annual_price']; ?><span class="month">per year</span></h5>
                                                             <h6>Single Domain</h6>
                                                             <ul>
-                                                            <li><strong>Webspace</strong> Disk Space</li>
-                                                            <li><strong>Free Domain</strong> Data Transfer</li>
-                                                            <li><strong>Unlimited</strong> Email Accounts</li>
-                                                            <li><strong>Includes </strong>  Global CDN</li>
-                                                            <li><strong>High Performance</strong>  Servers</li>
+                                                            <li><strong>SKU</strong><?php echo $row['sku']; ?></li>
+                                                            <li><strong>Webspace</strong><?php echo $desc->webspace; ?></li>
+                                                            <li><strong>Free Domain</strong><?php echo $desc->free_domain; ?></li>
+                                                            <li><strong>Bandwidth</strong><?php echo $desc->bandwidth; ?></li>
+                                                            <li><strong>Language</strong><?php echo $desc->language; ?></li>
+                                                            <li><strong>Mailbox</strong><?php echo $desc->mailbox; ?></li>
                                                             <li><strong>location</strong> : <img src="images/india.png"></li>
                                                             </ul>
                                                         </div>
-                                                        <a href="#">buy now</a>
+                                                        <a data-id="<?php echo $row['prod_id']; ?>"  class="addToCart" href="#">buy now</a>
                                                     </div>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                        <?php    }
-                                        } ?>
-                                        <div class="linux-prices">
-                                            <div class="col-md-3 linux-price">
-                                                <div class="linux-top">
-                                                <h4>Standard</h4>
-                                                </div>
-                                                <div class="linux-bottom">
-                                                    <h5>$279 <span class="month">per month</span></h5>
-                                                    <h6>Single Domain</h6>
-                                                    <ul>
-                                                    <li><strong>Unlimited</strong> Disk Space</li>
-                                                    <li><strong>Unlimited</strong> Data Transfer</li>
-                                                    <li><strong>Unlimited</strong> Email Accounts</li>
-                                                    <li><strong>Includes </strong>  Global CDN</li>
-                                                    <li><strong>High Performance</strong>  Servers</li>
-                                                    <li><strong>location</strong> : <img src="images/india.png"></li>
-                                                    </ul>
-                                                </div>
-                                                <a href="#">buy now</a>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                        </div>
+                                            <?php    }
+                                            } ?>
+                                        <div class="clearfix"></div>
                                     </div>
                                 </div>
                             </div>
@@ -195,8 +176,11 @@ if(isset($_GET['id'])) {
                     </div>
 
                 </div>
+<script src="user.js"></script>
 <?php include("footer.php"); ?>
 <?php 
+} else {
+    header("Location:index.php");
 }
 
 ?>

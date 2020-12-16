@@ -11,11 +11,27 @@ class Product {
     public function addCategory($name , $link ,$conn) {
         $prod_parent_id =1;
         $prod_available =1;
-        $sql = "INSERT INTO tbl_product(`prod_parent_id`, `prod_name` , `html`, `prod_available`) VALUES ('".$prod_parent_id."','".$name."', '".$link."','".$prod_available."')";
-        if ($conn->query($sql) === true) {
-            $ret = "Category added successfully";
-        } else {
-            $ret =$conn->error;
+        $r = false;
+        $ret = "";
+        $sqlselect = "SELECT * FROM tbl_product";
+		$result = $conn->query($sqlselect);
+		if($result->num_rows > 0){
+			while($row = $result->fetch_assoc()) {
+				if($row['prod_name'] == $name){
+					$r=true;
+				}
+			}
+        }
+        if($r == false) {
+            $sql = "INSERT INTO tbl_product(`prod_parent_id`, `prod_name` , `html`, `prod_available`) VALUES ('".$prod_parent_id."','".$name."', '".$link."','".$prod_available."')";
+            if ($conn->query($sql) === true) {
+                $ret = "Category added successfully";
+            } else {
+                $ret = $conn->error;
+            }
+        }
+        else {
+            $ret = "Category already exist"; 
         }
         return $ret;
     }
@@ -41,8 +57,8 @@ class Product {
                         $last_id = $conn->insert_id;
                         $sqldesc ="INSERT INTO tbl_product_description (`prod_id`,`description`,`mon_price`,`annual_price`,`sku`) VALUES ('$last_id','$desc','$mplan','$aplan','$sku')";
                         if ($conn->query($sqldesc) === true) {
+                            $ret = "product added successfully";
                         }
-                        $ret = "product added successfully";
                     } else {
                         $ret = $conn->error;
                     }
@@ -100,6 +116,7 @@ class Product {
                           $category = $rowcat['prod_name'];
                     }
                 }
+                
                 $data["data"][] = array($row['prod_name'], $category, $row['html'],$row['mon_price'],$row['annual_price'] ,$row['sku'],$row['prod_available'] ,$row['prod_launch_date'],$desc->webspace,$desc->bandwidth,$desc->free_domain,$desc->language,$desc->mailbox ,"<input type='button' data-id=".$row['prod_id']." class='deleteProduct btn btn-danger' name='deleteProduct' value='delete'>","<input type='button' data-id=".$row['prod_id']." class='editProduct btn btn-success' name='editProduct' data-toggle='modal' data-target='#editModal' value='edit'>");
             }
         }
@@ -157,7 +174,6 @@ class Product {
     }
     public function saveCategory($id, $name, $link, $conn) {
         $sql = "UPDATE tbl_product SET `prod_name`='$name' ,`html`='$link'  WHERE `id` = '$id'";
-
 		if ($conn->query($sql) === TRUE) {
 			$ret = "update successfully";
 		} else {
@@ -207,13 +223,28 @@ class Product {
     public function disableCategory($id, $conn) {
         $available = 0;
         $sql = "UPDATE tbl_product SET `prod_available`='$available' WHERE `id` = '$id'";
-
 		if ($conn->query($sql) === TRUE) {
 			$ret = "disable successfully";
 		} else {
 			$ret = "Error updating record: " . $conn->error;
 		}
 		return $ret;
+    }
+    public function addToCart($id, $conn) {
+        $_SESSION['cart'] = array();
+        $ret = "";
+        $sql = "SELECT a.* , b.*  FROM tbl_product as a INNER JOIN tbl_product_description as b ON a.id = b.prod_id WHERE a.id= '$id'";
+		$result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()){
+                array_push($_SESSION['cart'], $row);
+                $ret = "Product added into cart successfully";
+            }
+        }
+        else {
+            $ret = "Product not added into cart";
+        }
+        return $ret;
     }
 }
 

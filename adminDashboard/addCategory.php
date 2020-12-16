@@ -293,12 +293,10 @@ include_once("sidebar.php"); ?>
                         </div>
                       </div>
                       <div class="form-group">
-                        <div class="input-group input-group-merge input-group-alternative mb-3">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="ni ni-email-83"></i></span>
-                          </div>
-                          <input class="link form-control" placeholder="link" name="link" type="text">
-                        </div>
+                          <label class="form-label form-label-top form-label-auto" id="label_3" for="input_3">
+                            Html Code
+                        </label>
+                        <textarea  class="link form-control" name="link" id="editor"></textarea>
                       </div>
                       <div class="form-group">
                         <div class="input-group input-group-merge input-group-alternative">
@@ -311,7 +309,7 @@ include_once("sidebar.php"); ?>
                                   <input class="form-control" placeholder="Hosting" value="<?php echo $row['prod_name']; ?>" type="text" disabled>
                               <?php }
                             }
-                            ?>
+                          ?>
                         </div>
                       </div>
                       <div class="row my-4">
