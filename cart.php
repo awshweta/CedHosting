@@ -25,20 +25,16 @@
 	<!---banner--->
             <div class="contain container-fluid mt--20">
                 <div class="row">
-                    <div class="col-xl-0 col-lg-0">
-                    </div>
-                        <div class="col-xl-9 col-lg-9">
+                        <div class="col-xl-12 col-lg-12">
                         <table class="cartTable" style="width:100%">
                             <thead>
                                 <tr>
+                                    <th>Category Name</th>
                                     <th>Product Name</th>
+                                    <th>Billing Cycle</th>
                                     <th>Product Price</th>
                                     <th>Sku</th>
-                                    <th>Webspace</th>
-                                    <th>Free Domain</th>
-                                    <th>Bandwidth</th>
-                                    <th>Language</th>
-                                    <th>Maibox</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                         </table>

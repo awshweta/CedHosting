@@ -14,12 +14,12 @@ if(isset($_GET['id'])) {
     include("header.php");
 ?>
     <link rel="stylesheet" href="css/swipebox.css">
-            <script src="js/jquery.swipebox.min.js"></script> 
-                <script type="text/javascript">
-                    jQuery(function($) {
-                        $(".swipebox").swipebox();
-                    });
-                </script>				
+    <script src="js/jquery.swipebox.min.js"></script> 
+    <script type="text/javascript">
+        jQuery(function($) {
+            $(".swipebox").swipebox();
+        });
+    </script>				
 </head>
 <body>
     <!---header--->
@@ -85,19 +85,19 @@ if(isset($_GET['id'])) {
                                                     <div class="modal-dialog">
                                                     <!-- Modal content-->
                                                         <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                            <h4 class="modal-title">Select Price</h4>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <form id="priceForm" role="form" method="POST">
-                                                                <select class="selectPrice<?php echo $row['prod_id']; ?>">
-                                                                    <option value="<?php echo $row['mon_price']; ?>">Monthly Price <?php echo $row['mon_price']; ?></option>
-                                                                    <option value="<?php echo $row['annual_price']; ?>">Annual Price <?php echo $row['annual_price']; ?></option>
-                                                                </select>
-                                                                <button class="addToCart" type="button" data-id="<?php echo $row['prod_id']; ?>">Submit</button>
-                                                            </form>
-                                                        </div>
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                <h4 class="modal-title">Select Price</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form id="priceForm" role="form" method="POST">
+                                                                    <select class="selectPrice<?php echo $row['prod_id']; ?>">
+                                                                        <option value="<?php echo $row['mon_price']; ?>">Monthly Price <?php echo $row['mon_price']; ?></option>
+                                                                        <option value="<?php echo $row['annual_price']; ?>">Annual Price <?php echo $row['annual_price']; ?></option>
+                                                                    </select>
+                                                                    <button class="addToCart" type="button" data-id="<?php echo $row['prod_id']; ?>">Submit</button>
+                                                                </form>
+                                                            </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                             </div>

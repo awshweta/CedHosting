@@ -262,7 +262,8 @@ class Product {
         if (!isset($_SESSION['cart'])) {
             $_SESSION['cart'] = array();
         }
-        //echo $price;
+        $category ="";
+        $billing = "";
         $ret = "";
         $data = array();
         $obj = array(); 
@@ -272,7 +273,21 @@ class Product {
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()){
                 $desc = json_decode($row['description']);
-                $data = array('id'=>$row['prod_id'],'name'=>$row['prod_name'],'price'=>$price ,'sku'=>$row['sku'] ,'prod_launch_date'=>$row['prod_launch_date'] ,'webspace'=>$desc->webspace ,'bandwidth'=>$desc->bandwidth ,'domain'=>$desc->free_domain,'language'=>$desc->language,'mailbox'=>$desc->mailbox );
+                $cid = $row['prod_parent_id'];
+                $sqlcat = "SELECT *  FROM tbl_product WHERE `prod_parent_id` ='1'  AND `id`='$cid'";
+                $resultcat = $conn->query($sqlcat);
+                if ($resultcat->num_rows > 0) {
+                    while ($rowcat = $resultcat->fetch_assoc()) {
+                          $category = $rowcat['prod_name'];
+                    }
+                }
+                if($row['mon_price'] == $price) {
+                    $billing = "Monthly";
+                }
+                else {
+                    $billing = "Annualy";
+                }
+                $data = array('id'=>$row['prod_id'],'category'=>$category ,'name'=>$row['prod_name'],'price'=>$price ,'sku'=>$row['sku'] ,'billing'=>$billing );
                 array_push($obj, $data);
                 foreach ($_SESSION['cart'] as $key =>$value) {
                     foreach ($value as $k=>$v) {

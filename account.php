@@ -100,7 +100,7 @@ if(isset($_POST['submit'])) {
     if($r == false) {
         if($pass == $rePass) {
             $ret = $user->register($email, $name, $pass, $ques, $ans, $mobile, $db->conn);
-            echo '<script>alert("'.$ret.'");</script>';
+            //echo '<script>alert("'.$ret.'");</script>';
         }
     }
 }
