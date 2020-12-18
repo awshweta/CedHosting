@@ -296,7 +296,7 @@ include_once("sidebar.php"); ?>
                           <label class="form-label form-label-top form-label-auto" id="label_3" for="input_3">
                             Html Code
                         </label>
-                        <textarea  class="link form-control" name="link" id="editor"></textarea>
+                        <textarea  class="link form-control" cols="35" rows="12" name="link" id="editor"></textarea>
                       </div>
                       <div class="form-group">
                         <div class="input-group input-group-merge input-group-alternative">

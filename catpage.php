@@ -30,14 +30,14 @@ if(isset($_GET['id'])) {
                         <div class="container">
                             <div class="linux-grids">
                                 <div class="col-md-8 linux-grid">
-                                <?php 
-                                if ($ret->num_rows > 0) {
-                                    while ($row = $ret->fetch_assoc()) { ?>
-                                        <h2><?php echo $row['prod_name']; ?></h2>
-                                        <?php echo json_decode($row['html']); ?>
-                                  <?php  }
-                                }
-                                ?>
+                                    <?php 
+                                    if ($ret->num_rows > 0) {
+                                        while ($row = $ret->fetch_assoc()) { ?>
+                                            <h2><?php echo $row['prod_name']; ?></h2>
+                                            <?php echo json_decode($row['html']); ?>
+                                    <?php  }
+                                    }
+                                    ?>
                                 <a href="#tab">view plans</a>
                                 </div>
                                 <div class="col-md-4 linux-grid1">
@@ -78,8 +78,32 @@ if(isset($_GET['id'])) {
                                                             <li><strong>location</strong> : <img src="images/india.png"></li>
                                                             </ul>
                                                         </div>
-                                                        <a data-id="<?php echo $row['prod_id']; ?>"  class="addToCart" href="#">buy now</a>
+                                                        <a data-toggle='modal' data-target="#<?php echo $row['prod_id']; ?>"  href="#">Add To Cart</a>
                                                     </div>
+
+                                                    <div class="modal fade" id="<?php echo $row['prod_id']; ?>" role="dialog">
+                                                    <div class="modal-dialog">
+                                                    <!-- Modal content-->
+                                                        <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            <h4 class="modal-title">Select Price</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form id="priceForm" role="form" method="POST">
+                                                                <select class="selectPrice<?php echo $row['prod_id']; ?>">
+                                                                    <option value="<?php echo $row['mon_price']; ?>">Monthly Price <?php echo $row['mon_price']; ?></option>
+                                                                    <option value="<?php echo $row['annual_price']; ?>">Annual Price <?php echo $row['annual_price']; ?></option>
+                                                                </select>
+                                                                <button class="addToCart" type="button" data-id="<?php echo $row['prod_id']; ?>">Submit</button>
+                                                            </form>
+                                                        </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             <?php    }
                                             } ?>
                                         <div class="clearfix"></div>
@@ -102,80 +126,7 @@ if(isset($_GET['id'])) {
                         </ul>
                     </div>
                 </div>
-       <!-- clients -->
-                    <div class="whatdo">
-                        <div class="container">
-                            <h3>Linux Features</h3>
-                            <div class="what-grids">
-                                <div class="col-md-4 what-grid">
-                                    <div class="what-left">
-                                    <i class="glyphicon glyphicon-cog" aria-hidden="true"></i>
-                                    </div>
-                                    <div class="what-right">
-                                        <h4>Expert Web Design</h4>
-                                        <p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore </p>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="col-md-4 what-grid">
-                                    <div class="what-left">
-                                    <i class="glyphicon glyphicon-dashboard" aria-hidden="true"></i>
-                                    </div>
-                                    <div class="what-right">
-                                        <h4>Expert Web Design</h4>
-                                        <p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore </p>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="col-md-4 what-grid">
-                                    <div class="what-left">
-                                    <i class="glyphicon glyphicon-stats" aria-hidden="true"></i>
-                                    </div>
-                                    <div class="what-right">
-                                        <h4>Expert Web Design</h4>
-                                        <p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore </p>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="what-grids">
-                                <div class="col-md-4 what-grid">
-                                    <div class="what-left">
-                                    <i class="glyphicon glyphicon-download-alt" aria-hidden="true"></i>
-                                    </div>
-                                    <div class="what-right">
-                                        <h4>Expert Web Design</h4>
-                                        <p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore </p>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="col-md-4 what-grid">
-                                    <div class="what-left">
-                                    <i class="glyphicon glyphicon-move" aria-hidden="true"></i>
-                                    </div>
-                                    <div class="what-right">
-                                        <h4>Expert Web Design</h4>
-                                        <p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore </p>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="col-md-4 what-grid">
-                                    <div class="what-left">
-                                    <i class="glyphicon glyphicon-screenshot" aria-hidden="true"></i>
-                                    </div>
-                                    <div class="what-right">
-                                        <h4>Expert Web Design</h4>
-                                        <p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore </p>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+            </div>
 <script src="user.js"></script>
 <?php include("footer.php"); ?>
 <?php 

@@ -52,6 +52,8 @@ $('.display').on("click" ,'.disableCategory',function() {
         }); 
     }   
 });
+
+
 $('#form').on("click" ,'.saveCategory',function() {
     var id= $(this).data('id');
     var name = $(".cat").val().trim();
@@ -430,8 +432,7 @@ $(document).ready(function() {
     $('.addCategory').click(function(){
         var name = $('.name').val().trim();
         var link = $('.link').val().trim();
-        console.log(name);
-        console.log(link);
+
         $.ajax({
             type: "POST",
             url: "request.php",

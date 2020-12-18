@@ -47,7 +47,14 @@ $result =$product->fetchCategory($db->conn);
 							<li <?php if($filename == 'blog.php') { ?> class="active"<?php }  ?>><a href="blog.php">Blog</a></li>
 							<li <?php if($filename == 'pricing.php') { ?> class="active"<?php }  ?>><a href="pricing.php">Pricing</a></li>
 							<li <?php if($filename == 'contact.php') { ?> class="active"<?php }  ?>><a href="contact.php">Contact</a></li>
-							<li ><a><i class="fas fa-shopping-cart"></i></a></li>
+							<li ><a href="cart.php"><i class="fas fa-shopping-cart">
+							<span class="badge badge-success"><?php 
+								if(isset($_SESSION['cart'])) {
+									echo count($_SESSION['cart']);
+								}
+							?>
+							</span>
+							</i></a></li>
 							<?php if(isset($_SESSION['user'])) { ?>
 								<li <?php if($filename == 'logout.php') { ?> class="active"<?php }  ?> ><a href="logout.php">Logout</a></li>
 							<?php } 

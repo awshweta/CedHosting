@@ -317,6 +317,7 @@ include_once("sidebar.php"); ?>
                         <th>Product Mailbox</th>
                         <th>Action</th>
                         <th></th>
+                        <th></th>
                     </tr>
                 </thead>
             </table>

@@ -116,8 +116,14 @@ class Product {
                           $category = $rowcat['prod_name'];
                     }
                 }
-                
-                $data["data"][] = array($row['prod_name'], $category, $row['html'],$row['mon_price'],$row['annual_price'] ,$row['sku'],$row['prod_available'] ,$row['prod_launch_date'],$desc->webspace,$desc->bandwidth,$desc->free_domain,$desc->language,$desc->mailbox ,"<input type='button' data-id=".$row['prod_id']." class='deleteProduct btn btn-danger' name='deleteProduct' value='delete'>","<input type='button' data-id=".$row['prod_id']." class='editProduct btn btn-success' name='editProduct' data-toggle='modal' data-target='#editModal' value='edit'>");
+                if($row['prod_available'] == 1) {
+                    $available ="available";
+                    $data["data"][] = array($row['prod_name'], $category, $row['html'],$row['mon_price'],$row['annual_price'] ,$row['sku'],$available ,$row['prod_launch_date'],$desc->webspace,$desc->bandwidth,$desc->free_domain,$desc->language,$desc->mailbox ,"<input type='button' data-id=".$row['prod_id']." class='deleteProduct btn btn-danger' name='deleteProduct' value='delete'>","<input type='button' data-id=".$row['prod_id']." class='editProduct btn btn-success' name='editProduct' data-toggle='modal' data-target='#editModal' value='edit'>","<input type='button' data-id=".$row['prod_id']." class='disableProduct btn btn-danger' name='disableProduct' value='disable'>");
+                }
+                else {
+                    $available ="unavailable";
+                    $data["data"][] = array($row['prod_name'], $category, $row['html'],$row['mon_price'],$row['annual_price'] ,$row['sku'],$available ,$row['prod_launch_date'],$desc->webspace,$desc->bandwidth,$desc->free_domain,$desc->language,$desc->mailbox ,"<input type='button' data-id=".$row['prod_id']." class='deleteProduct btn btn-danger' name='deleteProduct' value='delete'>","<input type='button' data-id=".$row['prod_id']." class='editProduct btn btn-success' name='editProduct' data-toggle='modal' data-target='#editModal' value='edit'>","<input type='button' data-id=".$row['prod_id']." class='enableProduct btn btn-success' name='enableProduct' value='enable'>");
+                }
             }
         }
         return $data;
@@ -209,6 +215,28 @@ class Product {
             }
         }
     }
+
+    public function enableProduct($id, $conn) {
+        $available = 1;
+        $sql = "UPDATE tbl_product SET `prod_available`='$available' WHERE `id` = '$id'";
+
+		if ($conn->query($sql) === TRUE) {
+			$ret = "enable successfully";
+		} else {
+			$ret = "Error updating record: " . $conn->error;
+		}
+		return $ret;
+    }
+    public function disableProduct($id, $conn) {
+        $available = 0;
+        $sql = "UPDATE tbl_product SET `prod_available`='$available' WHERE `id` = '$id'";
+		if ($conn->query($sql) === TRUE) {
+			$ret = "disable successfully";
+		} else {
+			$ret = "Error updating record: " . $conn->error;
+		}
+		return $ret;
+    }
     public function enableCategory($id, $conn) {
         $available = 1;
         $sql = "UPDATE tbl_product SET `prod_available`='$available' WHERE `id` = '$id'";
@@ -230,20 +258,43 @@ class Product {
 		}
 		return $ret;
     }
-    public function addToCart($id, $conn) {
-        $_SESSION['cart'] = array();
+    public function addToCart($id,$price, $conn) {
+        if (!isset($_SESSION['cart'])) {
+            $_SESSION['cart'] = array();
+        }
+        //echo $price;
         $ret = "";
+        $data = array();
+        $obj = array(); 
+        $r = false;
         $sql = "SELECT a.* , b.*  FROM tbl_product as a INNER JOIN tbl_product_description as b ON a.id = b.prod_id WHERE a.id= '$id'";
 		$result = $conn->query($sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()){
-                array_push($_SESSION['cart'], $row);
-                $ret = "Product added into cart successfully";
+                $desc = json_decode($row['description']);
+                $data = array('id'=>$row['prod_id'],'name'=>$row['prod_name'],'price'=>$price ,'sku'=>$row['sku'] ,'prod_launch_date'=>$row['prod_launch_date'] ,'webspace'=>$desc->webspace ,'bandwidth'=>$desc->bandwidth ,'domain'=>$desc->free_domain,'language'=>$desc->language,'mailbox'=>$desc->mailbox );
+                array_push($obj, $data);
+                foreach ($_SESSION['cart'] as $key =>$value) {
+                    foreach ($value as $k=>$v) {
+                        if ($v['id']==$id) {
+                            $r=true;
+                            break;
+                        }
+                    }
+                }
+                if ($r == false) {
+                    array_push($_SESSION['cart'], $obj);
+                    $ret = "Product added into cart successfully";
+                }
+                if($r == true) {
+                    $ret = "Product already added";
+                }
             }
         }
         else {
-            $ret = "Product not added into cart";
+            $ret = "Product not added to cart";
         }
+        //print_r($_SESSION['cart']);
         return $ret;
     }
 }

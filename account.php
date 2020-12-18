@@ -77,9 +77,9 @@ if(isset($_POST['submit'])) {
     }
     $pattern = "/^[a-zA-Z0-9-]+\.?+@[a-zA-Z0-9]+\.[a-zA-Z]{2,4}$/";
     if (!preg_match ($pattern, $email) ) { 
-        $emailErr = "Please follow name@example.com format";
+        $emailErr = "Two decimal(.) not allowed together,White spaces no allowed,No special character except @.";
         $r = true;
-    }  
+    }
     if(!preg_match('/^([a-zA-Z]+\s?)*$/', $name)) { 
         $nameErr ="please enter alphabet character only and more than one space are not allow between word";
         $r = true;
@@ -95,7 +95,7 @@ if(isset($_POST['submit'])) {
     }
     if(!preg_match("/^(?=.*\d)(?=.*[@#\-_$%^&+=§!\?])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z@#\-_$%^&+=§!\?]{8,16}$/", $pass)) {
         $r = true;
-        $passErr ="Minimum 8-16 characters, at least one uppercase letter, one lowercase letter, one number and one special character and space are not allowed";
+        $passErr = "Minimum 8-16 characters, at least one uppercase letter, one lowercase letter, one number and one special character and space are not allowed";
     }
     if($r == false) {
         if($pass == $rePass) {

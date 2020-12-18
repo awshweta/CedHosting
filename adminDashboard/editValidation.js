@@ -224,6 +224,43 @@ $('.productTable').on("click" ,'.editProduct',function() {
         }); 
     }   
 });
+$('.productTable').on("click" ,'.enableProduct',function() {
+    if(confirm("Are you sure you want to enable this Category?")) {
+        var id= $(this).data('id');
+        $.ajax({
+            type: "POST",
+            url: "request.php",
+            data:{ id:id , action :'enableProduct' },
+            dataType: "JSON",
+            success:function( msg ) {
+               alert(msg);
+               location.reload();
+            },
+            error:function() {
+                alert("error");
+            }
+        }); 
+    }   
+});
+
+$('.productTable').on("click" ,'.disableProduct',function() {
+    if(confirm("Are you sure you want to disable this Category?")) {
+        var id= $(this).data('id');
+        $.ajax({
+            type: "POST",
+            url: "request.php",
+            data:{ id:id , action :'disableProduct' },
+            dataType: "JSON",
+            success:function( msg ) {
+               alert(msg);
+               location.reload();
+            },
+            error:function() {
+                alert("error");
+            }
+        }); 
+    }   
+});
 function validation() {
     var name = $('.name').val();
     var category = $('.category').val();

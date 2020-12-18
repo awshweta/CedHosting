@@ -117,6 +117,22 @@ include_once("../Product.php");
             $arr = $product->enableCategory($id, $db->conn);
             echo json_encode($arr);
         }
+        if ($_POST['action'] == "enableProduct") {
+            $id = $_POST['id'];
+            $db = new DbCon();
+            $product = new Product();
+            $data = array();
+            $arr = $product->enableProduct($id, $db->conn);
+            echo json_encode($arr);
+        }
+        if ($_POST['action'] == "disableProduct") {
+            $id = $_POST['id'];
+            $db = new DbCon();
+            $product = new Product();
+            $data = array();
+            $arr = $product->disableProduct($id, $db->conn);
+            echo json_encode($arr);
+        }
         if ($_POST['action'] == "disableCategory") {
             $id = $_POST['id'];
             $db = new DbCon();
